@@ -5,3 +5,4 @@ export const UPDATE_EVENT = "UPDATE_EVENT";
 export const FILTER_EVENT = "FILTER_EVENT";
 export const CLEAR_FILTER = "CLEAR_FILTER";
 export const EVENT_ERROR = "EVENT_ERROR";
+export const SET_CURRENT = "SET_CURRENT";
