@@ -4,7 +4,7 @@ import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
-import EventState from "./context/events/eventState";
+import EventState from "./context/events/EventState";
 
 function App() {
   return (

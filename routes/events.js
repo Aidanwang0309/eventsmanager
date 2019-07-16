@@ -12,7 +12,7 @@ const Event = require("../models/Event");
 
 router.get("/", async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: -1 });
+    const events = await Event.find().sort({ date: 1 });
     res.json(events);
   } catch (err) {
     console.error(err.message);

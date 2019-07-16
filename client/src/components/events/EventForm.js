@@ -4,12 +4,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import EventContext from "../../context/events/eventContext";
+import CloseIcon from "@material-ui/icons/Close";
 
 const EventForm = () => {
   const classes = useStyles();
   const eventContext = useContext(EventContext);
 
-  const { addEvent, current } = eventContext;
+  const {
+    addEvent,
+    updateEvent,
+    current,
+    clearCurrent,
+    setEditing
+  } = eventContext;
 
   useEffect(() => {
     if (current !== null) {
@@ -38,8 +45,24 @@ const EventForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    addEvent(event);
+    if (current === null) {
+      addEvent(event);
+    } else {
+      console.log("here");
+      updateEvent(event);
+    }
+    clearCurrent();
     setEvent({
+      name: "",
+      location: "",
+      date: "2019-07-01T10:30",
+      type: ""
+    });
+    setEditing(false);
+  };
+
+  const onClear = () => {
+    clearCurrent({
       name: "",
       location: "",
       date: "2019-07-01T10:30",
@@ -54,6 +77,13 @@ const EventForm = () => {
       noValidate
       autoComplete="off"
     >
+      <CloseIcon
+        className={classes.closeButton}
+        onClick={() => {
+          setEditing(false);
+          onClear();
+        }}
+      />
       <div className={classes.formPart}>
         <Typography variant="h3" component="h2" gutterBottom>
           {current ? "Update event" : "Add event"}
@@ -105,7 +135,11 @@ const EventForm = () => {
       </div>
       <div className={classes.formPart2}>
         {current ? (
-          <Button className={classes.button} type="submit" variant="outlined">
+          <Button
+            className={classes.button}
+            variant="outlined"
+            onClick={onClear}
+          >
             Clear
           </Button>
         ) : null}
@@ -127,13 +161,20 @@ const useStyles = makeStyles(theme => ({
     margin: "10% 5%"
   },
 
+  closeButton: {
+    position: "absolute",
+    top: "2rem",
+    right: "2rem"
+  },
+
   formPart: {
-    width: "80%",
+    width: "100%",
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    flexDirection: "column"
   },
   formPart2: {
-    width: "80%",
+    width: "100%",
     display: "flex",
     justifyContent: "flex-end"
   },
@@ -141,7 +182,7 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: "80%"
+    width: "100%"
   },
   dense: {
     marginTop: 19

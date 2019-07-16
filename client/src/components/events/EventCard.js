@@ -22,7 +22,7 @@ const faces = [
 const EventCard = event => {
   const eventContext = useContext(EventContext);
   const { _id, name, date, location, className } = event;
-  const { deleteEvent, setCurrent } = eventContext;
+  const { deleteEvent, setCurrent, setEditing } = eventContext;
 
   const handleDelete = () => {
     deleteEvent(_id);
@@ -62,7 +62,7 @@ const EventCard = event => {
           className={"MuiAvatar-edit-button"}
           onClick={() => {
             setCurrent(event);
-            console.log(event);
+            setEditing(true);
           }}
         />
       </CardContent>

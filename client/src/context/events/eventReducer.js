@@ -6,7 +6,9 @@ import {
   FILTER_EVENT,
   CLEAR_FILTER,
   EVENT_ERROR,
-  SET_CURRENT
+  SET_CURRENT,
+  CLEAR_CURRENT,
+  SET_EDITING
 } from "../types";
 
 export default (state, action) => {
@@ -19,6 +21,13 @@ export default (state, action) => {
         events: [action.payload, ...state.events],
         loading: false
       };
+    case UPDATE_EVENT:
+      return {
+        ...state,
+        events: state.events.map(event =>
+          event._id === action.payload._id ? action.payload : event
+        )
+      };
     case DELETE_EVENT:
       return {
         ...state,
@@ -29,6 +38,29 @@ export default (state, action) => {
       return {
         ...state,
         current: action.payload
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
+    case SET_EDITING:
+      return {
+        ...state,
+        editing: action.payload
+      };
+    case FILTER_EVENT:
+      return {
+        ...state,
+        filtered: state.events.filter(event => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return event.name.match(regex) || event.location.match(regex);
+        })
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null
       };
     default:
       return state;

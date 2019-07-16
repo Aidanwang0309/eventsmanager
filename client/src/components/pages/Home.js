@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, Fragment } from "react";
 import Events from "../events/Events";
 import EventForm from "../events/EventForm";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Dialog from "@material-ui/core/Dialog";
 
-const Home = () => {
-  const [open, setOpen] = React.useState(false);
+import EventContext from "../../context/events/eventContext";
 
-  const handleClickOpen = () => setOpen(true);
+const Home = () => {
+  const eventContext = useContext(EventContext);
+
+  const { editing, setEditing } = eventContext;
 
   return (
-    <div>
+    <Fragment>
       <Fab
         color="primary"
         aria-label="Add"
         style={{ position: "fixed", bottom: "3rem", right: "3rem" }}
-        onClick={handleClickOpen}
+        onClick={() => setEditing(true)}
       >
         <AddIcon />
       </Fab>
-      <Dialog open={open} aria-labelledby="simple-dialog-title">
+      <Dialog
+        fullWidth={"fullWidth"}
+        maxWidth={"md"}
+        open={editing}
+        aria-labelledby="simple-dialog-title"
+      >
         <EventForm />
       </Dialog>
 
       <Events />
-    </div>
+    </Fragment>
   );
 };
 

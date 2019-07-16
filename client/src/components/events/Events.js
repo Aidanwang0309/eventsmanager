@@ -1,6 +1,7 @@
 import React, { useContext, Fragment, useEffect } from "react";
 import EventContext from "../../context/events/eventContext";
 import EventCard from "./EventCard";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import {
   MuiThemeProvider,
@@ -12,7 +13,7 @@ const muiBaseTheme = createMuiTheme();
 
 const Events = () => {
   const eventContext = useContext(EventContext);
-  const { events, getEvents } = eventContext;
+  const { events, getEvents, filtered } = eventContext;
   const classes = useStyles();
 
   useEffect(() => {
@@ -24,27 +25,31 @@ const Events = () => {
   //     return <h4>Please add a contact</h4>;
   //   }
 
+  const eventsList = filtered || events;
+
   return (
-    <div className={classes.eventsContainer}>
-      <MuiThemeProvider
-        theme={createMuiTheme({
-          overrides: EventCard.getTheme(muiBaseTheme)
-        })}
-      >
-        {events === null
+    <MuiThemeProvider
+      theme={createMuiTheme({
+        overrides: EventCard.getTheme(muiBaseTheme)
+      })}
+    >
+      <TransitionGroup className={classes.eventsContainer}>
+        {eventsList === null
           ? null
-          : events.map(event => (
-              <EventCard
-                className={classes.eventCard}
-                _id={event._id}
-                name={event.name}
-                date={event.date}
-                location={event.location}
-                type={event.type}
-              />
+          : eventsList.map(event => (
+              <CSSTransition key={event._id} timeout={500} classNames="item">
+                <EventCard
+                  className={classes.eventCard}
+                  _id={event._id}
+                  name={event.name}
+                  date={event.date}
+                  location={event.location}
+                  type={event.type}
+                />
+              </CSSTransition>
             ))}
-      </MuiThemeProvider>
-    </div>
+      </TransitionGroup>
+    </MuiThemeProvider>
   );
 };
 
@@ -52,7 +57,8 @@ const useStyles = makeStyles(theme => ({
   eventsContainer: {
     display: "block",
     [theme.breakpoints.up("sm")]: {
-      display: "flex"
+      display: "flex",
+      flexWrap: "wrap"
     }
   },
   eventCard: {
@@ -60,7 +66,7 @@ const useStyles = makeStyles(theme => ({
     margin: "10% auto",
     [theme.breakpoints.up("sm")]: {
       width: "30%",
-      margin: "0 auto"
+      margin: "3rem auto"
     }
   }
 }));
