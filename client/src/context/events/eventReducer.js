@@ -54,7 +54,11 @@ export default (state, action) => {
         ...state,
         filtered: state.events.filter(event => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return event.name.match(regex) || event.location.match(regex);
+          return (
+            event.name.match(regex) ||
+            event.location.match(regex) ||
+            event.date.match(regex)
+          );
         })
       };
     case CLEAR_FILTER:

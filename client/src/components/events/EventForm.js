@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Themebutton from "../button/Themebutton";
 import EventContext from "../../context/events/eventContext";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -134,18 +134,11 @@ const EventForm = () => {
         />
       </div>
       <div className={classes.formPart2}>
-        {current ? (
-          <Button
-            className={classes.button}
-            variant="outlined"
-            onClick={onClear}
-          >
-            Clear
-          </Button>
-        ) : null}
-        <Button className={classes.button} type="submit" variant="outlined">
-          {current ? "Update event" : "Add event"}
-        </Button>
+        {current ? <Themebutton handleClick={onClear} content="Clear" /> : null}
+        <Themebutton
+          type="submit"
+          content={current ? "Update event" : "Add event"}
+        />
       </div>
     </form>
   );
