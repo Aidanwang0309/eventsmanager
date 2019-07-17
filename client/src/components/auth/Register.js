@@ -1,17 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import Themebutton from "../button/Themebutton";
+import Themebutton from "../layout/Themebutton";
 
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
+import Alert from "../layout/Alert";
 
-const Register = () => {
+const Register = props => {
   const authContext = useContext(AuthContext);
   const { register, error, clearErrors, isAuthenticated } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+
+    if (error === "User already exists") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     name: "",
@@ -27,15 +40,11 @@ const Register = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log("register");
     if (name === "" || email === "" || password === "") {
-      console.log("register1");
       setAlert("Please enter all fields", "danger");
     } else if (password !== password2) {
-      console.log("register2");
       setAlert("Passwords do not match", "danger");
     } else {
-      console.log("register3");
       register({
         name,
         email,
@@ -74,7 +83,6 @@ const Register = () => {
         required
         onChange={onChange}
       />
-
       <TextField
         id="standard-password-input"
         label="Password"
@@ -90,7 +98,6 @@ const Register = () => {
         required
         onChange={onChange}
       />
-
       <TextField
         id="standard-password-input"
         label="Confirm Password"
@@ -107,6 +114,7 @@ const Register = () => {
         onChange={onChange}
       />
       <Themebutton content="Register" type="submit" value="Register" />
+      <Alert />
     </form>
   );
 };

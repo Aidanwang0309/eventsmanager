@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
+import Button from "@material-ui/core/Button";
 import {
   AppBar,
   Toolbar,
@@ -12,12 +15,34 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import EventFilter from "../events/EventFilter";
 import { fade, makeStyles } from "@material-ui/core/styles";
+import AuthContext from "../../context/auth/authContext";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 const Navbar = ({ title, icon }) => {
   const classes = useStyles();
 
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, logout, user } = authContext;
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.root}>
       <Toolbar className={classes.toolBar}>
         <IconButton
           edge="start"
@@ -31,23 +56,42 @@ const Navbar = ({ title, icon }) => {
           Party Animal
         </Typography>
         <EventFilter />
-        {/* <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
+
+        {isAuthenticated ? (
+          <div>
+            <IconButton
+              aria-label="Account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleLogout}>Log out</MenuItem>
+            </Menu>
           </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput
-            }}
-            inputProps={{ "aria-label": "Search" }}
-          />
-        </div> */}
-        {/* <h1>
-          <i className={icon} />
-          {title}
-        </h1> */}
+        ) : (
+          <Link className={classes.link} to="/login">
+            <Button color="inherit">Login</Button>
+          </Link>
+        )}
       </Toolbar>
     </AppBar>
   );
@@ -55,10 +99,17 @@ const Navbar = ({ title, icon }) => {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundColor: "transparent !important"
   },
+
+  link: {
+    textDecoration: "none",
+    color: "inherit"
+  },
+
   toolBar: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"
+    background: "transparent"
   },
   menuButton: {
     marginRight: theme.spacing(2)

@@ -59,9 +59,7 @@ const EventState = props => {
   const addEvent = async event => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWQyMjZjZGQwNDRmNGI3ZDdjYmVjZjdmIn0sImlhdCI6MTU2Mjk2MjI2MywiZXhwIjoxNTYzMzIyMjYzfQ.Q_DtAFfDhu5QeAvwIwrXAx7rNZ1XHwFjPyh3NhvXnno"
+        "Content-Type": "application/json"
       }
     };
 
@@ -85,9 +83,7 @@ const EventState = props => {
   const deleteEvent = async id => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWQyMjZjZGQwNDRmNGI3ZDdjYmVjZjdmIn0sImlhdCI6MTU2Mjk2MjI2MywiZXhwIjoxNTYzMzIyMjYzfQ.Q_DtAFfDhu5QeAvwIwrXAx7rNZ1XHwFjPyh3NhvXnno"
+        "Content-Type": "application/json"
       }
     };
 

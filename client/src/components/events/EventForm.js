@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Themebutton from "../button/Themebutton";
+import Themebutton from "../layout/Themebutton";
 import EventContext from "../../context/events/eventContext";
 import CloseIcon from "@material-ui/icons/Close";
 

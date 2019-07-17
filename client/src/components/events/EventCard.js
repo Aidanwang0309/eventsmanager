@@ -74,6 +74,8 @@ EventCard.getTheme = muiBaseTheme => ({
   MuiCard: {
     root: {
       "&.MuiEngagementCard--01": {
+        backgroundColor: "rgba(183, 183, 183, 0.2)",
+        color: "#ececec",
         transition: "0.3s",
         overFlow: "hidden",
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
