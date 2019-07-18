@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://shuai:930309@eventskeeper-wx6bb.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}
