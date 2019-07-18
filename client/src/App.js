@@ -6,7 +6,7 @@ import Home from "./components/pages/Home";
 import About from "./components/pages/About";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
-import EventState from "./context/events/EventState";
+import EventState from "./context/events/eventState";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import setAuthToken from "./utils/setAuthToken";
