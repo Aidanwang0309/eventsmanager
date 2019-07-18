@@ -5,8 +5,6 @@ const path = require("path");
 const connectDB = require("./config/db");
 connectDB();
 
-const PORT = process.env.port || 5000;
-
 app.use(express.json({ extended: false }));
 
 // Define Routes
@@ -24,4 +22,5 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`LISTENING TO PORT ${PORT}`));
