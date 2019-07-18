@@ -53,7 +53,7 @@ const Navbar = ({ title, icon }) => {
           <MenuIcon />
         </IconButton>
         <Typography className={classes.title} variant="h6" noWrap>
-          Party Animal
+          Party Animal Beta 1.0
         </Typography>
         <EventFilter />
 

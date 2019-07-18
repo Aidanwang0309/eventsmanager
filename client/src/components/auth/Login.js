@@ -4,9 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Themebutton from "../layout/Themebutton";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-
+import { Typography } from "@material-ui/core";
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
+import { Link } from "react-router-dom";
 
 const Login = props => {
   const authContext = useContext(AuthContext);
@@ -51,6 +52,14 @@ const Login = props => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Typography
+        align="center"
+        variant="h3"
+        style={{ color: "white" }}
+        gutterBottom
+      >
+        Welcome Back
+      </Typography>
       <form onSubmit={onSubmit} className={classes.container} noValidate>
         <TextField
           id="standard-email-input"
@@ -81,7 +90,14 @@ const Login = props => {
           required
           onChange={onChange}
         />
-        <Themebutton content="Login" type="submit" value="Register" />
+        <Typography className={classes.typography}>
+          No account ?
+          <Link className={classes.link} to="/register">
+            {" "}
+            Register Here{" "}
+          </Link>
+        </Typography>
+        <Themebutton content="SIGN IN" type="submit" value="Register" />
       </form>
     </ThemeProvider>
   );
@@ -132,6 +148,15 @@ const useStyles = makeStyles(theme => ({
     "&$focused": {
       backgroundColor: "# f0f0f0"
     }
+  },
+  typography: {
+    color: "white",
+    margin: "20px 20px 0px 0px"
+  },
+
+  link: {
+    textDecoration: "none",
+    color: "#ff8383c2"
   }
 }));
 

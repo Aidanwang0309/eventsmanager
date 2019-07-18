@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Themebutton from "../layout/Themebutton";
+import { Typography } from "@material-ui/core";
 
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
@@ -54,68 +55,78 @@ const Register = props => {
   };
 
   return (
-    <form onSubmit={onSubmit} className={classes.container} noValidate>
-      <TextField
-        id="standard-name"
-        label="Name"
-        className={classes.textField}
-        value={name}
-        // onChange={handleChange("name")}
-        type="text"
-        name="name"
-        margin="normal"
-        variant="filled"
-        fullWidth
-        required
-        onChange={onChange}
-      />
-      <TextField
-        id="standard-email-input"
-        label="Email"
-        className={classes.textField}
-        value={email}
-        type="email"
-        name="email"
-        autoComplete="email"
-        margin="normal"
-        variant="filled"
-        fullWidth
-        required
-        onChange={onChange}
-      />
-      <TextField
-        id="standard-password-input"
-        label="Password"
-        className={classes.textField}
-        value={password}
-        type="password"
-        name="password"
-        minLength="6"
-        autoComplete="current-password"
-        margin="normal"
-        variant="filled"
-        fullWidth
-        required
-        onChange={onChange}
-      />
-      <TextField
-        id="standard-password-input"
-        label="Confirm Password"
-        className={classes.textField}
-        value={password2}
-        type="password"
-        name="password2"
-        minLength="6"
-        autoComplete="current-password"
-        margin="normal"
-        variant="filled"
-        fullWidth
-        required
-        onChange={onChange}
-      />
-      <Themebutton content="Register" type="submit" value="Register" />
-      <Alert />
-    </form>
+    <Fragment>
+      <Typography
+        align="center"
+        variant="h3"
+        style={{ color: "white" }}
+        gutterBottom
+      >
+        Create Account!
+      </Typography>
+      <form onSubmit={onSubmit} className={classes.container} noValidate>
+        <TextField
+          id="standard-name"
+          label="Name"
+          className={classes.textField}
+          value={name}
+          // onChange={handleChange("name")}
+          type="text"
+          name="name"
+          margin="normal"
+          variant="filled"
+          fullWidth
+          required
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-email-input"
+          label="Email"
+          className={classes.textField}
+          value={email}
+          type="email"
+          name="email"
+          autoComplete="email"
+          margin="normal"
+          variant="filled"
+          fullWidth
+          required
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          className={classes.textField}
+          value={password}
+          type="password"
+          name="password"
+          minLength="6"
+          autoComplete="current-password"
+          margin="normal"
+          variant="filled"
+          fullWidth
+          required
+          onChange={onChange}
+        />
+        <TextField
+          id="standard-password-input"
+          label="Confirm Password"
+          className={classes.textField}
+          value={password2}
+          type="password"
+          name="password2"
+          minLength="6"
+          autoComplete="current-password"
+          margin="normal"
+          variant="filled"
+          fullWidth
+          required
+          onChange={onChange}
+        />
+        <Themebutton content="SIGN UP" type="submit" value="Register" />
+        <Alert />
+      </form>
+    </Fragment>
   );
 };
 
