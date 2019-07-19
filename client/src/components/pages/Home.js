@@ -7,15 +7,18 @@ import Dialog from "@material-ui/core/Dialog";
 import Alert from "../layout/Alert";
 import EventContext from "../../context/events/eventContext";
 import AuthContext from "../../context/auth/authContext";
+import { Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
 
   const { editing, setEditing } = eventContext;
+  const { loadUser, isAuthenticated } = authContext;
 
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
     // eslint-disable-next-line
   }, []);
 
@@ -39,9 +42,21 @@ const Home = () => {
         fullWidth={"fullWidth"}
         maxWidth={"md"}
         open={editing}
+        onBackdropClick={() => setEditing(false)}
         aria-labelledby="simple-dialog-title"
       >
-        <EventForm />
+        {isAuthenticated ? (
+          <EventForm />
+        ) : (
+          <Typography
+            align="center"
+            style={{ color: "black", padding: "5rem" }}
+            gutterBottom
+          >
+            You have to login to edit the content .
+            <Link to="/login">SIGN IN</Link>
+          </Typography>
+        )}
       </Dialog>
 
       <Events />
