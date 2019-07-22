@@ -15,7 +15,7 @@ const Home = () => {
   const authContext = useContext(AuthContext);
 
   const { editing, setEditing } = eventContext;
-  const { loadUser, isAuthenticated } = authContext;
+  const { loadUser, isAuthenticated, user } = authContext;
 
   useEffect(() => {
     loadUser();

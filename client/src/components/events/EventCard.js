@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useContext } from "react";
+import React, { useContext, useEffect, Fragment } from "react";
 import {
   Avatar,
   Card,
@@ -9,6 +9,8 @@ import {
   Typography
 } from "@material-ui/core";
 import EventContext from "../../context/events/eventContext";
+import AuthContext from "../../context/auth/authContext";
+
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 
@@ -21,11 +23,42 @@ const faces = [
 
 const EventCard = event => {
   const eventContext = useContext(EventContext);
-  const { _id, name, date, location, className } = event;
   const { deleteEvent, setCurrent, setEditing } = eventContext;
+
+  const authContext = useContext(AuthContext);
+  const { loadUser, user } = authContext;
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
+
+  const { _id, name, date, location, className, creator } = event;
 
   const handleDelete = () => {
     deleteEvent(_id);
+  };
+
+  const handleEditing = () => {
+    if (user !== null) {
+      if (user._id === creator) {
+        return (
+          <Fragment>
+            <DeleteOutlinedIcon
+              className={"MuiAvatar-delete-button"}
+              onClick={handleDelete}
+            />
+            <EditOutlined
+              className={"MuiAvatar-edit-button"}
+              onClick={() => {
+                setCurrent(event);
+                setEditing(true);
+              }}
+            />
+          </Fragment>
+        );
+      }
+    }
   };
 
   return (
@@ -54,17 +87,7 @@ const EventCard = event => {
         {faces.map(face => (
           <Avatar className={"MuiAvatar-root"} key={face} src={face} />
         ))}
-        <DeleteOutlinedIcon
-          className={"MuiAvatar-delete-button"}
-          onClick={handleDelete}
-        />
-        <EditOutlined
-          className={"MuiAvatar-edit-button"}
-          onClick={() => {
-            setCurrent(event);
-            setEditing(true);
-          }}
-        />
+        {handleEditing()}
       </CardContent>
     </Card>
   );

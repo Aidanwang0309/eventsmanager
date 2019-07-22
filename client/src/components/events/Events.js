@@ -8,12 +8,14 @@ import {
   createMuiTheme,
   makeStyles
 } from "@material-ui/core/styles";
+import { userInfo } from "os";
 
 const muiBaseTheme = createMuiTheme();
 
 const Events = () => {
   const eventContext = useContext(EventContext);
   const { events, getEvents, filtered } = eventContext;
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -45,6 +47,7 @@ const Events = () => {
                   date={event.date}
                   location={event.location}
                   type={event.type}
+                  creator={event.creator}
                 />
               </CSSTransition>
             ))}
