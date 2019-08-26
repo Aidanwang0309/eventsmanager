@@ -8,7 +8,8 @@ import {
   EVENT_ERROR,
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_EDITING
+  SET_EDITING,
+  ADD_ATTENDEE
 } from "../types";
 
 export default (state, action) => {
@@ -65,6 +66,12 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null
+      };
+
+    case ADD_ATTENDEE:
+      return {
+        ...state,
+        attendees: [...state.attendees, action.payload]
       };
     default:
       return state;

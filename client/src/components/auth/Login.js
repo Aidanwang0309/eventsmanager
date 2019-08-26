@@ -8,6 +8,7 @@ import { Typography } from "@material-ui/core";
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 import { Link } from "react-router-dom";
+import Alert from "../layout/Alert";
 
 const Login = props => {
   const authContext = useContext(AuthContext);
@@ -52,6 +53,7 @@ const Login = props => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Alert />
       <Typography
         align="center"
         variant="h3"

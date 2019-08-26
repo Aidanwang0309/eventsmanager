@@ -48,6 +48,7 @@ const Events = () => {
                   location={event.location}
                   type={event.type}
                   creator={event.creator}
+                  attendees={event.attendees}
                 />
               </CSSTransition>
             ))}

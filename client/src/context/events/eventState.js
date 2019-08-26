@@ -14,7 +14,8 @@ import {
   EVENT_ERROR,
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_EDITING
+  SET_EDITING,
+  ADD_ATTENDEE
 } from "../types";
 
 const EventState = props => {
@@ -32,7 +33,8 @@ const EventState = props => {
     current: null,
     editing: false,
     filtered: null,
-    error: null
+    error: null,
+    attendees: []
   };
 
   const [state, dispatch] = useReducer(EventReducer, initialState);
@@ -107,9 +109,7 @@ const EventState = props => {
   const updateEvent = async event => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWQyMjZjZGQwNDRmNGI3ZDdjYmVjZjdmIn0sImlhdCI6MTU2Mjk2MjI2MywiZXhwIjoxNTYzMzIyMjYzfQ.Q_DtAFfDhu5QeAvwIwrXAx7rNZ1XHwFjPyh3NhvXnno"
+        "Content-Type": "application/json"
       }
     };
 
@@ -165,6 +165,10 @@ const EventState = props => {
     });
   };
 
+  const addAttendee = event => {
+    updateEvent(event);
+  };
+
   return (
     <EventContext.Provider
       value={{
@@ -173,6 +177,7 @@ const EventState = props => {
         editing: state.editing,
         error: state.error,
         current: state.current,
+        attendees: state.attendees,
         getEvents,
         addEvent,
         updateEvent,
@@ -181,7 +186,8 @@ const EventState = props => {
         clearCurrent,
         setEditing,
         filterEvents,
-        clearFilter
+        clearFilter,
+        addAttendee
       }}
     >
       {props.children}

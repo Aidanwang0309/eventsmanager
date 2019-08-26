@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useContext, useEffect, Fragment } from "react";
+import React, { useContext, useEffect, Fragment, useState } from "react";
 import {
   Avatar,
   Card,
@@ -10,20 +10,21 @@ import {
 } from "@material-ui/core";
 import EventContext from "../../context/events/eventContext";
 import AuthContext from "../../context/auth/authContext";
-
+import axios from "axios";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
+import Themebutton from "../layout/Themebutton";
 
 const faces = [
-  // "http://i.pravatar.cc/300?img=1",
-  // "http://i.pravatar.cc/300?img=2",
-  // "http://i.pravatar.cc/300?img=3",
-  // "http://i.pravatar.cc/300?img=4"
+  "https://mdbootstrap.com/img/Photos/Avatars/img%20(3).jpg",
+  "https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg",
+  "https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg",
+  "https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
 ];
 
 const EventCard = event => {
   const eventContext = useContext(EventContext);
-  const { deleteEvent, setCurrent, setEditing } = eventContext;
+  const { deleteEvent, setCurrent, setEditing, addAttendee } = eventContext;
 
   const authContext = useContext(AuthContext);
   const { loadUser, user } = authContext;
@@ -33,11 +34,36 @@ const EventCard = event => {
     // eslint-disable-next-line
   }, []);
 
-  const { _id, name, date, location, className, creator } = event;
+  const {
+    _id,
+    name,
+    date,
+    location,
+    className,
+    creator,
+    attendees,
+    type
+  } = event;
 
   const handleDelete = () => {
     deleteEvent(_id);
   };
+
+  const handleGoing = () => {
+    let updateEvent = {
+      ...event,
+      attendees: [...attendees, user]
+    };
+    if (user !== null) {
+      addAttendee(updateEvent);
+    }
+  };
+
+  // const avartar = async () => {
+  //   const res = await axios.get(`https://ui-avatars.com/api/?name=${name}`);
+  //   console.log(res);
+  //   return res;
+  // };
 
   const handleEditing = () => {
     if (user !== null) {
@@ -84,9 +110,21 @@ const EventCard = event => {
           {date}
         </Typography>
         <Divider className={"MuiDivider-root"} light />
-        {faces.map(face => (
-          <Avatar className={"MuiAvatar-root"} key={face} src={face} />
-        ))}
+
+        <div className={"MuiCardContent--attendContainer"}>
+          <div>
+            {/* {attendees.map(attendee => (
+              <h1>{attendee}</h1>
+            ))} */}
+            {faces.map(face => (
+              <Avatar className={"MuiAvatar-root"} key={face} src={face} />
+            ))}
+          </div>
+          {/* {attendees.map(attendee => {
+            return <h1>{attendee.name}</h1>;
+          })} */}
+          <Themebutton content="Going" handleClick={handleGoing} />
+        </div>
         {handleEditing()}
       </CardContent>
     </Card>
@@ -113,6 +151,11 @@ EventCard.getTheme = muiBaseTheme => ({
           textAlign: "left",
           padding: muiBaseTheme.spacing(3)
         },
+        "& .MuiCardContent--attendContainer": {
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between"
+        },
         "& .MuiDivider-root": {
           margin: `${muiBaseTheme.spacing(3)}px 0`
         },
@@ -125,13 +168,13 @@ EventCard.getTheme = muiBaseTheme => ({
         "& .MuiAvatar-delete-button": {
           position: "absolute",
           right: "5%",
-          bottom: "5%",
+          top: "-15%",
           cursor: "pointer"
         },
         "& .MuiAvatar-edit-button": {
           position: "absolute",
           right: "20%",
-          bottom: "5%",
+          top: "-15%",
           cursor: "pointer"
         },
         "& .MuiAvatar-root": {

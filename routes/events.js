@@ -53,7 +53,8 @@ router.post(
         date,
         location,
         type,
-        creator: req.user.id
+        creator: req.user.id,
+        attendees: []
       });
       const event = await newEvent.save();
       res.json(event);
@@ -69,7 +70,7 @@ router.post(
 // access Private
 
 router.put("/:id", auth, async (req, res) => {
-  const { name, date, location, type } = req.body;
+  const { name, date, location, type, attendees } = req.body;
 
   // Build event object
   const eventFields = {};
@@ -77,15 +78,16 @@ router.put("/:id", auth, async (req, res) => {
   if (date) eventFields.date = date;
   if (location) eventFields.location = location;
   if (type) eventFields.type = type;
+  if (attendees) eventFields.attendees = attendees;
 
   try {
     let event = await Event.findById(req.params.id);
 
     if (!event) return res.status(404).json({ msg: "event not found" });
 
-    if (event.creator.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized" });
-    }
+    // if (event.creator.toString() !== req.user.id) {
+    //   return res.status(401).json({ msg: "Not authorized" });
+    // }
 
     event = await Event.findByIdAndUpdate(
       req.params.id,
@@ -95,7 +97,7 @@ router.put("/:id", auth, async (req, res) => {
 
     res.json(event);
   } catch (err) {
-    console.error(er.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });

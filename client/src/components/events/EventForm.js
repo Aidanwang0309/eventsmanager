@@ -4,11 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Themebutton from "../layout/Themebutton";
 import EventContext from "../../context/events/eventContext";
+// import AuthContext from "../../context/auth/authContext";
 import CloseIcon from "@material-ui/icons/Close";
 
 const EventForm = () => {
   const classes = useStyles();
   const eventContext = useContext(EventContext);
+  // const authContext = useContext(AuthContext);
 
   const {
     addEvent,
@@ -17,6 +19,8 @@ const EventForm = () => {
     clearCurrent,
     setEditing
   } = eventContext;
+
+  // const { token } = authContext;
 
   useEffect(() => {
     if (current !== null) {
@@ -48,7 +52,6 @@ const EventForm = () => {
     if (current === null) {
       addEvent(event);
     } else {
-      console.log("here");
       updateEvent(event);
     }
     clearCurrent();

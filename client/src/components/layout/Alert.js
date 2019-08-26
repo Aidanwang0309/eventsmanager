@@ -39,6 +39,7 @@ const Alert = () => {
             vertical: "bottom",
             horizontal: "left"
           }}
+          variant="error"
           open={open}
           autoHideDuration={6000}
           onClose={handleClose}

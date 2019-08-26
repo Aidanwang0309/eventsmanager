@@ -5,6 +5,7 @@ const EventSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users"
   },
+
   name: {
     type: String,
     required: true
@@ -25,7 +26,7 @@ const EventSchema = mongoose.Schema({
     default: "rave"
   },
 
-  attendee: []
+  attendees: []
 });
 
 module.exports = mongoose.model("event", EventSchema);
