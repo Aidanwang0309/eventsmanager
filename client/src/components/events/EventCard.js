@@ -15,12 +15,12 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import Themebutton from "../layout/Themebutton";
 
-const faces = [
-  "https://mdbootstrap.com/img/Photos/Avatars/img%20(3).jpg",
-  "https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg",
-  "https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg",
-  "https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
-];
+// const faces = [
+//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(3).jpg",
+//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg",
+//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg",
+//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
+// ];
 
 const EventCard = event => {
   const eventContext = useContext(EventContext);
@@ -116,8 +116,12 @@ const EventCard = event => {
             {/* {attendees.map(attendee => (
               <h1>{attendee}</h1>
             ))} */}
-            {faces.map(face => (
-              <Avatar className={"MuiAvatar-root"} key={face} src={face} />
+            {attendees.map(attendee => (
+              <Avatar
+                className={"MuiAvatar-root"}
+                key={attendee._id}
+                src={attendee.avatar}
+              />
             ))}
           </div>
           {/* {attendees.map(attendee => {

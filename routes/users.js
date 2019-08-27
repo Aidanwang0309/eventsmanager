@@ -46,6 +46,7 @@ router.post(
       const salt = await bcrypt.genSalt(10);
 
       user.password = await bcrypt.hash(password, salt);
+      user.avatar = `https://ui-avatars.com/api/?name=${name}`;
 
       await user.save();
 
