@@ -1,14 +1,19 @@
 const mongoose = require("mongoose");
-const config = require("config");
-const db = config.get("mongoURI");
+// const config = require("config");
+// const db = config.get("mongoURI");
+
+require("dotenv").config();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(db, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false
-    });
+    await mongoose.connect(
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@eventskeeper-wx6bb.mongodb.net/test?retryWrites=true&w=majority`,
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+      }
+    );
 
     console.log("MongoDB Connected...");
   } catch (err) {
