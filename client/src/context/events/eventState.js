@@ -34,6 +34,7 @@ const EventState = props => {
     editing: false,
     filtered: null,
     error: null,
+    poster: null,
     attendees: []
   };
 

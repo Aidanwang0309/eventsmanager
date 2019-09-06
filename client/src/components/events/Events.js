@@ -49,6 +49,7 @@ const Events = () => {
                   type={event.type}
                   creator={event.creator}
                   attendees={event.attendees}
+                  poster={event.poster}
                 />
               </CSSTransition>
             ))}

@@ -6,6 +6,7 @@ import Themebutton from "../layout/Themebutton";
 import EventContext from "../../context/events/eventContext";
 // import AuthContext from "../../context/auth/authContext";
 import CloseIcon from "@material-ui/icons/Close";
+import EventPicture from "./EventPicture";
 
 const EventForm = () => {
   const classes = useStyles();
@@ -92,6 +93,7 @@ const EventForm = () => {
           {current ? "Update event" : "Add event"}
         </Typography>
       </div>
+      <EventPicture />
       <div className={classes.formPart}>
         <TextField
           id="standard-name"

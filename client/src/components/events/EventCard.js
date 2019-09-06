@@ -15,13 +15,6 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import Themebutton from "../layout/Themebutton";
 
-// const faces = [
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(3).jpg",
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg",
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg",
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
-// ];
-
 const EventCard = event => {
   const eventContext = useContext(EventContext);
   const { deleteEvent, setCurrent, setEditing, addAttendee } = eventContext;
@@ -42,6 +35,7 @@ const EventCard = event => {
     className,
     creator,
     attendees,
+    poster,
     type
   } = event;
 
@@ -58,12 +52,6 @@ const EventCard = event => {
       addAttendee(updateEvent);
     }
   };
-
-  // const avartar = async () => {
-  //   const res = await axios.get(`https://ui-avatars.com/api/?name=${name}`);
-  //   console.log(res);
-  //   return res;
-  // };
 
   const handleEditing = () => {
     if (user !== null) {
@@ -89,12 +77,7 @@ const EventCard = event => {
 
   return (
     <Card className={`MuiEngagementCard--01 ${className}`}>
-      <CardMedia
-        className={"MuiCardMedia-root"}
-        image={
-          "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-        }
-      />
+      <CardMedia className={"MuiCardMedia-root"} image={poster} />
       <CardContent className={"MuiCardContent-root"}>
         <Typography
           className={"MuiTypography--heading"}

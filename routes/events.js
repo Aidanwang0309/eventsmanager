@@ -132,4 +132,5 @@ router.delete("/:id", auth, async (req, res) => {
 // router.post("/", (req, res) => {
 //   res.send("register user");
 // });
+
 module.exports = router;

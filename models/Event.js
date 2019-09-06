@@ -26,6 +26,12 @@ const EventSchema = mongoose.Schema({
     default: "rave"
   },
 
+  poster: {
+    type: String,
+    default:
+      "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+  },
+
   attendees: []
 });
 

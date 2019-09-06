@@ -1,0 +1,98 @@
+NativeConnection {
+[0]   base: Mongoose {
+[0]     connections: [ [Circular] ],
+[0]     models: {
+[0]       user: Model { user },
+[0]       event: Model { event },
+[0]       image: Model { image }
+[0]     },
+[0]     modelSchemas: { user: [Schema], event: [Schema], image: [Schema] },
+[0]     options: { pluralization: true },
+[0]     _pluralize: [Function: pluralize],
+[0]     Schema: [Function: Schema] {
+[0]       reserved: [Object: null prototype],
+[0]       Types: [Object],
+[0]       ObjectId: [Function]
+[0]     },
+[0]     model: [Function],
+[0]     plugins: [ [Array], [Array], [Array], [Array] ]
+[0]   },
+[0]   collections: {
+[0]     users: NativeCollection {
+[0]       collection: null,
+[0]       Promise: [Function: Promise],
+[0]       opts: [Object],
+[0]       name: 'users',
+[0]       collectionName: 'users',
+[0]       conn: [Circular],
+[0]       queue: [],
+[0]       buffer: true,
+[0]       emitter: [EventEmitter]
+[0]     },
+[0]     events: NativeCollection {
+[0]       collection: null,
+[0]       Promise: [Function: Promise],
+[0]       opts: [Object],
+[0]       name: 'events',
+[0]       collectionName: 'events',
+[0]       conn: [Circular],
+[0]       queue: [],
+[0]       buffer: true,
+[0]       emitter: [EventEmitter]
+[0]     },
+[0]     images: NativeCollection {
+[0]       collection: null,
+[0]       Promise: [Function: Promise],
+[0]       opts: [Object],
+[0]       name: 'images',
+[0]       collectionName: 'images',
+[0]       conn: [Circular],
+[0]       queue: [],
+[0]       buffer: true,
+[0]       emitter: [EventEmitter]
+[0]     }
+[0]   },
+[0]   models: {
+[0]     user: Model { user },
+[0]     event: Model { event },
+[0]     image: Model { image }
+[0]   },
+[0]   config: { autoIndex: true, useCreateIndex: true, useFindAndModify: false },
+[0]   replica: false,
+[0]   options: null,
+[0]   otherDbs: [],
+[0]   relatedDbs: {},
+[0]   states: [Object: null prototype] {
+[0]     '0': 'disconnected',
+[0]     '1': 'connected',
+[0]     '2': 'connecting',
+[0]     '3': 'disconnecting',
+[0]     '99': 'uninitialized',
+[0]     disconnected: 0,
+[0]     connected: 1,
+[0]     connecting: 2,
+[0]     disconnecting: 3,
+[0]     uninitialized: 99
+[0]   },
+[0]   _readyState: 2,
+[0]   _closeCalled: false,
+[0]   _hasOpened: false,
+[0]   plugins: [],
+[0]   _listening: false,
+[0]   _connectionOptions: { useNewUrlParser: true, promiseLibrary: [Function: Promise] },
+[0]   client: MongoClient {
+[0]     _events: [Object: null prototype] {},
+[0]     _eventsCount: 0,
+[0]     _maxListeners: undefined,
+[0]     s: {
+[0]       url: 'mongodb+srv://shuai:930309@eventskeeper-wx6bb.mongodb.net/test?retryWrites=true&w=majority',
+[0]       options: [Object],
+[0]       promiseLibrary: [Function: Promise],
+[0]       dbCache: {},
+[0]       sessions: []
+[0]     }
+[0]   },
+[0]   '$initialConnection': Promise { <pending> },
+[0]   then: [Function],
+[0]   catch: [Function]
+[0] }
