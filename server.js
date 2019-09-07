@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-
 const connectDB = require("./config/db");
 connectDB();
 
@@ -11,6 +10,8 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));
+app.use("/api/fileUpload", require("./routes/fileUpload"));
+app.use("/api/file", require("./routes/file"));
 
 // Server config in production
 if (process.env.NODE_ENV === "production") {

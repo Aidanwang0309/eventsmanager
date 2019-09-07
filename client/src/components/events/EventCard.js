@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useContext, useEffect, Fragment, useState } from "react";
+import React, { useContext, useEffect, Fragment } from "react";
 import {
   Avatar,
   Card,
@@ -10,17 +10,9 @@ import {
 } from "@material-ui/core";
 import EventContext from "../../context/events/eventContext";
 import AuthContext from "../../context/auth/authContext";
-import axios from "axios";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import Themebutton from "../layout/Themebutton";
-
-// const faces = [
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(3).jpg",
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg",
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg",
-//   "https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
-// ];
 
 const EventCard = event => {
   const eventContext = useContext(EventContext);
@@ -42,11 +34,12 @@ const EventCard = event => {
     className,
     creator,
     attendees,
-    type
+    poster
+    // type
   } = event;
 
   const handleDelete = () => {
-    deleteEvent(_id);
+    deleteEvent(_id, poster);
   };
 
   const handleGoing = () => {
@@ -58,12 +51,6 @@ const EventCard = event => {
       addAttendee(updateEvent);
     }
   };
-
-  // const avartar = async () => {
-  //   const res = await axios.get(`https://ui-avatars.com/api/?name=${name}`);
-  //   console.log(res);
-  //   return res;
-  // };
 
   const handleEditing = () => {
     if (user !== null) {
@@ -91,9 +78,7 @@ const EventCard = event => {
     <Card className={`MuiEngagementCard--01 ${className}`}>
       <CardMedia
         className={"MuiCardMedia-root"}
-        image={
-          "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-        }
+        image={`http://localhost:5000/api/file/${poster}`}
       />
       <CardContent className={"MuiCardContent-root"}>
         <Typography

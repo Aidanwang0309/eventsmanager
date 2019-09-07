@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 require("dotenv").config();
 
 const connectDB = async () => {
@@ -12,7 +11,6 @@ const connectDB = async () => {
         useFindAndModify: false
       }
     );
-
     console.log("MongoDB Connected...");
   } catch (err) {
     console.error(err.message);

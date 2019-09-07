@@ -1,4 +1,4 @@
-import React, { useContext, Fragment, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import EventContext from "../../context/events/eventContext";
 import EventCard from "./EventCard";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -8,7 +8,6 @@ import {
   createMuiTheme,
   makeStyles
 } from "@material-ui/core/styles";
-import { userInfo } from "os";
 
 const muiBaseTheme = createMuiTheme();
 
@@ -49,6 +48,7 @@ const Events = () => {
                   type={event.type}
                   creator={event.creator}
                   attendees={event.attendees}
+                  poster={event.poster}
                 />
               </CSSTransition>
             ))}
