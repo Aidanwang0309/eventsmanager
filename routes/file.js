@@ -13,9 +13,12 @@ conn.once("open", function() {
   gfs.collection("myImage");
 });
 
+// @route GET file/:filename
+// @desc  get an image
+// access PUBLIC
+
 router.get("/:filename", async (req, res) => {
   // First check if file exists
-
   try {
     await gfs.files
       .find({ filename: req.params.filename })
@@ -42,6 +45,9 @@ router.get("/:filename", async (req, res) => {
   }
 });
 
+// @route DELETE file/:filename
+// @desc  delete an image
+// access PRIVATE
 router.delete("/:filename", auth, async (req, res) => {
   try {
     await gfs.remove(
