@@ -5,6 +5,7 @@ const router = express.Router();
 const Image = require("../models/ImageUpload");
 require("dotenv").config();
 const GridFsStorage = require("multer-gridfs-storage");
+
 // const dirPath = path.join(__dirname, "..", "public/upload");
 // const fs = require("fs");
 // const mongoose = require("mongoose");
@@ -44,11 +45,24 @@ const GridFsStorage = require("multer-gridfs-storage");
 
 const storage = new GridFsStorage({
   url: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@eventskeeper-wx6bb.mongodb.net/test?retryWrites=true&w=majority`,
-  filename: (req, file, cb) => {
-    let date = Date.now();
-    // The way you want to store your file in database
-    cb(null, file.fieldname + "-" + date + ".");
+
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      const filename =
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname);
+      const fileInfo = {
+        filename: filename,
+        bucketName: "myImage"
+      };
+      resolve(fileInfo);
+    });
   }
+
+  // filename: (req, file, cb) => {
+  //   let ext = path.extname(file.originalname);
+  //   cb(null, file.fieldname + "-" + Date.now() + ext);
+  // },
+  // root: "myFiles"
 });
 
 const upload = multer({ storage });

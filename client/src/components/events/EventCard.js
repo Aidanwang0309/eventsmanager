@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useContext, useEffect, Fragment, useState } from "react";
+import React, { useContext, useEffect, Fragment } from "react";
 import {
   Avatar,
   Card,
@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import EventContext from "../../context/events/eventContext";
 import AuthContext from "../../context/auth/authContext";
-import axios from "axios";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import Themebutton from "../layout/Themebutton";
@@ -35,12 +34,12 @@ const EventCard = event => {
     className,
     creator,
     attendees,
-    poster,
-    type
+    poster
+    // type
   } = event;
 
   const handleDelete = () => {
-    deleteEvent(_id);
+    deleteEvent(_id, poster);
   };
 
   const handleGoing = () => {
@@ -77,7 +76,10 @@ const EventCard = event => {
 
   return (
     <Card className={`MuiEngagementCard--01 ${className}`}>
-      <CardMedia className={"MuiCardMedia-root"} image={poster} />
+      <CardMedia
+        className={"MuiCardMedia-root"}
+        image={`http://localhost:5000/api/file/${poster}`}
+      />
       <CardContent className={"MuiCardContent-root"}>
         <Typography
           className={"MuiTypography--heading"}

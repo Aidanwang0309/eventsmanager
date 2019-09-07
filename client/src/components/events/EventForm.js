@@ -31,7 +31,8 @@ const EventForm = () => {
         name: "",
         location: "",
         date: "2019-07-01T10:30",
-        type: ""
+        type: "",
+        poster: ""
       });
     }
   }, [eventContext, current]);
@@ -40,13 +41,18 @@ const EventForm = () => {
     name: "",
     location: "",
     date: "2019-07-01T10:30",
-    type: ""
+    type: "",
+    poster: ""
   });
 
   const { name, location, date, type } = event;
 
   const handleChange = e =>
     setEvent({ ...event, [e.target.name]: e.target.value });
+
+  const handlePicture = imageName => {
+    setEvent({ ...event, poster: imageName });
+  };
 
   const onSubmit = e => {
     e.preventDefault();
@@ -60,7 +66,8 @@ const EventForm = () => {
       name: "",
       location: "",
       date: "2019-07-01T10:30",
-      type: ""
+      type: "",
+      poster: ""
     });
     setEditing(false);
   };
@@ -70,7 +77,8 @@ const EventForm = () => {
       name: "",
       location: "",
       date: "2019-07-01T10:30",
-      type: ""
+      type: "",
+      poster: ""
     });
   };
 
@@ -93,7 +101,7 @@ const EventForm = () => {
           {current ? "Update event" : "Add event"}
         </Typography>
       </div>
-      <EventPicture />
+      <EventPicture handlePicture={handlePicture} />
       <div className={classes.formPart}>
         <TextField
           id="standard-name"

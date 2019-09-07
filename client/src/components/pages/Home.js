@@ -15,7 +15,7 @@ const Home = () => {
   const authContext = useContext(AuthContext);
 
   const { editing, setEditing } = eventContext;
-  const { loadUser, isAuthenticated, user } = authContext;
+  const { loadUser, isAuthenticated } = authContext;
 
   useEffect(() => {
     loadUser();
@@ -39,7 +39,7 @@ const Home = () => {
         <AddIcon />
       </Fab>
       <Dialog
-        fullWidth={"fullWidth"}
+        fullWidth
         maxWidth={"md"}
         open={editing}
         onBackdropClick={() => setEditing(false)}

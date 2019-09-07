@@ -5,11 +5,9 @@ import {
   UPDATE_EVENT,
   FILTER_EVENT,
   CLEAR_FILTER,
-  EVENT_ERROR,
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_EDITING,
-  ADD_ATTENDEE
+  SET_EDITING
 } from "../types";
 
 export default (state, action) => {
@@ -66,12 +64,6 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null
-      };
-
-    case ADD_ATTENDEE:
-      return {
-        ...state,
-        attendees: [...state.attendees, action.payload]
       };
     default:
       return state;

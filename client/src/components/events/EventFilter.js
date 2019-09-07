@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { InputBase } from "@material-ui/core";
@@ -8,7 +8,7 @@ const EventFilter = () => {
   const classes = useStyles();
   const eventContext = useContext(EventContext);
 
-  const { filterEvents, clearFilter, filtered } = eventContext;
+  const { filterEvents, clearFilter } = eventContext;
   const [text, setText] = useState("");
 
   const onChange = e => {

@@ -1,20 +1,24 @@
 import React, { useState } from "react";
-import { Upload, Icon, message } from "antd";
+import { Upload, Icon } from "antd";
 
-const EventPicture = () => {
-  const [upload, setUpload] = useState({ loading: false, url: "" });
+const EventPicture = ({ handlePicture }) => {
+  const [upload, setUpload] = useState({
+    loading: false,
+    url: "",
+    fileName: ""
+  });
 
-  const beforeUpload = file => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt5M = file.size / 1024 / 1024 < 5;
-    if (!isLt5M) {
-      message.error("Image must smaller than 5MB!");
-    }
-    return isJpgOrPng && isLt5M;
-  };
+  // const beforeUpload = file => {
+  //   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  //   if (!isJpgOrPng) {
+  //     message.error("You can only upload JPG/PNG file!");
+  //   }
+  //   const isLt5M = file.size / 1024 / 1024 < 5;
+  //   if (!isLt5M) {
+  //     message.error("Image must smaller than 5MB!");
+  //   }
+  //   return isJpgOrPng && isLt5M;
+  // };
 
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -29,9 +33,13 @@ const EventPicture = () => {
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
+      const result = info.file.response;
+      const fileName = result.document.imageName;
+      handlePicture(fileName);
       getBase64(info.file.originFileObj, imageUrl =>
         setUpload({
           url: imageUrl,
+          fileName,
           loading: false
         })
       );

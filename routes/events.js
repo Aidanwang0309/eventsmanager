@@ -45,7 +45,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, date, location, type } = req.body;
+    const { name, date, location, type, poster } = req.body;
 
     try {
       const newEvent = new Event({
@@ -53,6 +53,7 @@ router.post(
         date,
         location,
         type,
+        poster,
         creator: req.user.id,
         attendees: []
       });
@@ -70,7 +71,7 @@ router.post(
 // access Private
 
 router.put("/:id", auth, async (req, res) => {
-  const { name, date, location, type, attendees } = req.body;
+  const { name, date, location, type, poster, attendees } = req.body;
 
   // Build event object
   const eventFields = {};
@@ -79,6 +80,7 @@ router.put("/:id", auth, async (req, res) => {
   if (location) eventFields.location = location;
   if (type) eventFields.type = type;
   if (attendees) eventFields.attendees = attendees;
+  if (poster) eventFields.poster = poster;
 
   try {
     let event = await Event.findById(req.params.id);

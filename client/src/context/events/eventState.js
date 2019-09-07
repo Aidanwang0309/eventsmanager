@@ -14,8 +14,7 @@ import {
   EVENT_ERROR,
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_EDITING,
-  ADD_ATTENDEE
+  SET_EDITING
 } from "../types";
 
 const EventState = props => {
@@ -68,7 +67,6 @@ const EventState = props => {
 
     try {
       const res = await axios.post("api/events", event, config);
-      console.log(res.data);
       dispatch({
         type: ADD_EVENT,
         payload: res.data
@@ -83,7 +81,7 @@ const EventState = props => {
 
   // Delete Event
 
-  const deleteEvent = async id => {
+  const deleteEvent = async (id, poster) => {
     const config = {
       headers: {
         "Content-Type": "application/json"
@@ -92,6 +90,7 @@ const EventState = props => {
 
     try {
       await axios.delete(`api/events/${id}`, config);
+      await axios.delete(`api/file/${poster}`);
 
       dispatch({
         type: DELETE_EVENT,

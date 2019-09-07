@@ -1,30 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const mongoose = require("mongoose");
-// const connectDB = require("./config/db");
-// connectDB();
-
-require("dotenv").config();
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(
-      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@eventskeeper-wx6bb.mongodb.net/test?retryWrites=true&w=majority`,
-      {
-        useNewUrlParser: true
-        // useCreateIndex: true,
-        // useFindAndModify: false
-      }
-    );
-
-    console.log("MongoDB Connected...");
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  }
-};
-
+const connectDB = require("./config/db");
 connectDB();
 
 app.use(express.json({ extended: false }));
