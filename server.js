@@ -10,7 +10,7 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));
-app.use("/api/fileUpload", require("./routes/fileUpload"));
+app.use("/api/img/upload", require("./routes/imgUpload"));
 app.use("/api/file", require("./routes/file"));
 
 // Server config in production

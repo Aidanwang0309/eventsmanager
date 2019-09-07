@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
-
 const User = require("../models/User");
 const Event = require("../models/Event");
 
@@ -13,10 +12,10 @@ const Event = require("../models/Event");
 router.get("/", async (req, res) => {
   try {
     const events = await Event.find().sort({ date: 1 });
-    res.json(events);
+    res.json({ status: 200, events });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send({ status: 200, msg: "Server Error" });
   }
 });
 
@@ -35,6 +34,9 @@ router.post(
       .not()
       .isEmpty(),
     check("location", "location is required")
+      .not()
+      .isEmpty(),
+    check("type", "type is required")
       .not()
       .isEmpty()
   ],
@@ -58,7 +60,7 @@ router.post(
         attendees: []
       });
       const event = await newEvent.save();
-      res.json(event);
+      res.json({ status: 200, event });
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server Error");
@@ -97,7 +99,7 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
 
-    res.json(event);
+    res.json({ status: 200, event });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -106,7 +108,7 @@ router.put("/:id", auth, async (req, res) => {
 
 // @route Delete api/events:id
 // @desc delete event
-// access public
+// access private
 
 router.delete("/:id", auth, async (req, res) => {
   try {
@@ -119,8 +121,7 @@ router.delete("/:id", auth, async (req, res) => {
     }
 
     await Event.findByIdAndRemove(req.params.id);
-
-    res.json({ msg: "Event removed" });
+    res.json({ status: 200, msg: "Event removed" });
   } catch (err) {
     console.error(er.message);
     res.status(500).send("Server Error");

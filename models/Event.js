@@ -28,8 +28,7 @@ const EventSchema = mongoose.Schema({
 
   poster: {
     type: String,
-    default:
-      "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+    default: "image-1567892895906.png"
   },
 
   attendees: []

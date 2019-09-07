@@ -47,7 +47,7 @@ const EventState = props => {
 
       dispatch({
         type: GET_EVENTS,
-        payload: res.data
+        payload: res.data.events
       });
     } catch (err) {
       dispatch({

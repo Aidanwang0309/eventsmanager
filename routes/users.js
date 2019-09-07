@@ -25,16 +25,17 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ status: 400, errors: errors.array() });
     }
 
     const { name, email, password } = req.body;
-
     try {
       let user = await User.findOne({ email });
 
       if (user) {
-        return res.status(400).json({ msg: "User already exists" });
+        return res
+          .status(400)
+          .json({ status: 400, msg: "User already exists" });
       }
 
       user = new User({
@@ -49,7 +50,6 @@ router.post(
       user.avatar = `https://ui-avatars.com/api/?name=${name}`;
 
       await user.save();
-
       const payload = {
         user: {
           id: user.id
@@ -64,12 +64,12 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ status: 200, token });
         }
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server Error");
+      res.status(500).send({ status: 500, msg: "Server Error" });
     }
   }
 );

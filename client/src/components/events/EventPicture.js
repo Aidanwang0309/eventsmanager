@@ -63,7 +63,7 @@ const EventPicture = ({ handlePicture }) => {
       listType="picture-card"
       className="avatar-uploader"
       showUploadList={false}
-      action="/api/fileUpload"
+      action="/api/img/upload"
       // beforeUpload={beforeUpload}
       onChange={handleChange}
     >

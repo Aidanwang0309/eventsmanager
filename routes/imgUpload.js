@@ -5,6 +5,7 @@ const router = express.Router();
 const Image = require("../models/ImageUpload");
 require("dotenv").config();
 const GridFsStorage = require("multer-gridfs-storage");
+const auth = require("../middleware/auth");
 
 // const dirPath = path.join(__dirname, "..", "public/upload");
 // const fs = require("fs");
@@ -68,7 +69,7 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 const uploadSingle = upload.single("image");
 
-router.post("/", uploadSingle, async (req, res) => {
+router.post("/", auth, uploadSingle, async (req, res) => {
   try {
     const newImage = new Image({
       imageName: req.file.filename,
@@ -77,7 +78,7 @@ router.post("/", uploadSingle, async (req, res) => {
 
     const result = await newImage.save();
     res.status(200).json({
-      success: true,
+      status: 200,
       document: result
     });
   } catch (err) {
