@@ -21,7 +21,7 @@ const Register = props => {
     }
 
     if (error === "User already exists") {
-      setAlert(error, "danger");
+      setAlert({ msg: error, type: "error" });
       clearErrors();
     }
     // eslint-disable-next-line
@@ -35,6 +35,7 @@ const Register = props => {
   });
 
   const { name, email, password, password2 } = user;
+
   const classes = useStyles();
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
@@ -42,9 +43,9 @@ const Register = props => {
   const onSubmit = e => {
     e.preventDefault();
     if (name === "" || email === "" || password === "") {
-      setAlert("Please enter all fields", "danger");
+      setAlert({ msg: "Please enter all fields", type: "warning" });
     } else if (password !== password2) {
-      setAlert("Passwords do not match", "danger");
+      setAlert({ msg: "Passwords do not match", type: "error" });
     } else {
       register({
         name,
@@ -109,7 +110,7 @@ const Register = props => {
           onChange={onChange}
         />
         <TextField
-          id="standard-password-input"
+          id="standard-password-input2"
           label="Confirm Password"
           className={classes.textField}
           value={password2}
