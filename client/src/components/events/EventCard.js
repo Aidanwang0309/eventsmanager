@@ -160,19 +160,22 @@ EventCard.getTheme = muiBaseTheme => ({
           color: "white"
         },
         "& .MuiTypography--subheading": {
-          fontSize: "1rem",
-          lineHeight: 1.8
+          fontSize: "0.75rem",
+          lineHeight: 1.8,
+          [muiBaseTheme.breakpoints.up("md")]: {
+            fontSize: "1rem"
+          }
         },
         "& .MuiAvatar-delete-button": {
           position: "absolute",
           right: "5%",
-          top: "35%",
+          bottom: "50%",
           cursor: "pointer"
         },
         "& .MuiAvatar-edit-button": {
           position: "absolute",
           right: "20%",
-          top: "35%",
+          bottom: "50%",
           cursor: "pointer"
         },
         "& .MuiAvatar-root": {

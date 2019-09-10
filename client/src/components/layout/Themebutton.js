@@ -5,9 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const Themebutton = props => {
   const classes = useStyles();
 
-  const { type, content, handleClick, value } = props;
+  const { type, content, handleClick, value, style } = props;
   return (
     <Button
+      style={style}
       className={classes.button}
       variant="outlined"
       type={type}
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     color: "white",
     height: 48,
     // margin: "40px 20px",
-    padding: "0 30px"
+    padding: "0 15px"
   }
 }));
 

@@ -7,6 +7,10 @@ import EventContext from "../../context/events/eventContext";
 import CloseIcon from "@material-ui/icons/Close";
 import EventPicture from "./EventPicture";
 import * as moment from "moment";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const EventForm = () => {
   const classes = useStyles();
@@ -127,7 +131,20 @@ const EventForm = () => {
               shrink: true
             }}
           />
-          <TextField
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="party-type">Type</InputLabel>
+            <Select
+              value={type}
+              onChange={handleChange}
+              name="type"
+              margin="normal"
+            >
+              <MenuItem value={"Rave"}>Rave</MenuItem>
+              <MenuItem value={"Circuit"}>Circuit</MenuItem>
+              <MenuItem value={"Art"}>Art</MenuItem>
+            </Select>
+          </FormControl>
+          {/* <TextField
             id="standard-name"
             label="type"
             className={classes.textField}
@@ -135,15 +152,18 @@ const EventForm = () => {
             name="type"
             onChange={handleChange}
             margin="normal"
-          />
+          /> */}
         </div>
       </div>
       <div className={classes.formPart2}>
-        {current ? <Themebutton handleClick={onClear} content="Clear" /> : null}
-        <Themebutton
-          type="submit"
-          content={current ? "Update event" : "Add event"}
-        />
+        {current ? (
+          <Themebutton
+            style={{ marginRight: "1rem" }}
+            handleClick={onClear}
+            content="Clear"
+          />
+        ) : null}
+        <Themebutton type="submit" content={current ? "Update" : "Add"} />
       </div>
     </form>
   );
@@ -157,6 +177,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-evenly",
     flexDirection: "column",
     margin: "10% 5%"
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    width: "100%"
   },
 
   closeButton: {
@@ -172,7 +197,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   formBody: {
-    marginTop: "1rem",
+    marginTop: "2.5rem",
     display: "flex",
     flexDirection: "column",
     width: "98%",
@@ -203,19 +228,6 @@ const useStyles = makeStyles(theme => ({
   },
   menu: {
     width: 200
-  },
-
-  button: {
-    cursor: "pointer",
-    width: "30%",
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    border: 0,
-    borderRadius: 3,
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    color: "white",
-    height: 48,
-    margin: "40px 20px",
-    padding: "0 30px"
   }
 }));
 
