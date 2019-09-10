@@ -1,4 +1,4 @@
-import React, { useContext, Fragment, useEffect } from "react";
+import React, { useContext, Fragment } from "react";
 import Events from "../events/Events";
 import EventForm from "../events/EventForm";
 import Fab from "@material-ui/core/Fab";
@@ -15,12 +15,7 @@ const Home = () => {
   const authContext = useContext(AuthContext);
 
   const { editing, setEditing } = eventContext;
-  const { loadUser, isAuthenticated } = authContext;
-
-  useEffect(() => {
-    loadUser();
-    // eslint-disable-next-line
-  }, []);
+  const { isAuthenticated } = authContext;
 
   return (
     <Fragment>
@@ -29,6 +24,7 @@ const Home = () => {
         color="primary"
         aria-label="Add"
         style={{
+          zIndex: 100,
           position: "fixed",
           bottom: "3rem",
           right: "3rem",
@@ -40,7 +36,7 @@ const Home = () => {
       </Fab>
       <Dialog
         fullWidth
-        maxWidth={"md"}
+        maxWidth={"sm"}
         open={editing}
         onBackdropClick={() => setEditing(false)}
         aria-labelledby="simple-dialog-title"
@@ -53,7 +49,7 @@ const Home = () => {
             style={{ color: "black", padding: "5rem" }}
             gutterBottom
           >
-            You have to login to edit the content .
+            You have to login to publish the content .
             <Link to="/login">SIGN IN</Link>
           </Typography>
         )}

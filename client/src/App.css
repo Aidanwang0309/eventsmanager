@@ -23,3 +23,7 @@ body {
   opacity: 0;
   transition: opacity 1000ms ease-in;
 }
+.ant-upload.ant-upload-select-picture-card {
+  width: 100% !important;
+  height: 8rem !important;
+}
