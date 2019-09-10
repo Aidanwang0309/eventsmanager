@@ -8,17 +8,17 @@ const EventPicture = ({ handlePicture }) => {
     fileName: ""
   });
 
-  // const beforeUpload = file => {
-  //   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  //   if (!isJpgOrPng) {
-  //     message.error("You can only upload JPG/PNG file!");
-  //   }
-  //   const isLt5M = file.size / 1024 / 1024 < 5;
-  //   if (!isLt5M) {
-  //     message.error("Image must smaller than 5MB!");
-  //   }
-  //   return isJpgOrPng && isLt5M;
-  // };
+  const beforeUpload = file => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      console.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      console.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
 
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -57,14 +57,12 @@ const EventPicture = ({ handlePicture }) => {
 
   return (
     <Upload
-      // name="avatar"
       accept="image/*" /*只接收图片格式*/
       name="image" /*请求参数名*/
       listType="picture-card"
-      className="avatar-uploader"
       showUploadList={false}
       action="/api/img/upload"
-      // beforeUpload={beforeUpload}
+      beforeUpload={beforeUpload}
       onChange={handleChange}
     >
       {url ? (

@@ -22,10 +22,6 @@ const Events = () => {
     // eslint-disable-next-line
   }, []);
 
-  //   if (events !== null && events.length === 0) {
-  //     return <h4>Please add a contact</h4>;
-  //   }
-
   const eventsList = filtered || events;
 
   return (
@@ -35,23 +31,21 @@ const Events = () => {
       })}
     >
       <TransitionGroup className={classes.eventsContainer}>
-        {eventsList === null
-          ? null
-          : eventsList.map(event => (
-              <CSSTransition key={event._id} timeout={500} classNames="item">
-                <EventCard
-                  className={classes.eventCard}
-                  _id={event._id}
-                  name={event.name}
-                  date={event.date}
-                  location={event.location}
-                  type={event.type}
-                  creator={event.creator}
-                  attendees={event.attendees}
-                  poster={event.poster}
-                />
-              </CSSTransition>
-            ))}
+        {eventsList.map(event => (
+          <CSSTransition key={event._id} timeout={500} classNames="item">
+            <EventCard
+              className={classes.eventCard}
+              _id={event._id}
+              name={event.name}
+              date={event.date}
+              location={event.location}
+              type={event.type}
+              creator={event.creator}
+              attendees={event.attendees}
+              poster={event.poster}
+            />
+          </CSSTransition>
+        ))}
       </TransitionGroup>
     </MuiThemeProvider>
   );

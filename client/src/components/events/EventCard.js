@@ -43,12 +43,12 @@ const EventCard = event => {
   };
 
   const handleGoing = () => {
-    let updateEvent = {
+    let updatedAttendee = {
       ...event,
       attendees: [...attendees, user]
     };
     if (user !== null) {
-      addAttendee(updateEvent);
+      addAttendee(updatedAttendee);
     }
   };
 
@@ -74,6 +74,18 @@ const EventCard = event => {
     }
   };
 
+  const formatDate = date => {
+    const dateWithoutYear = date.split("-").splice(1, 2);
+    const timeWithoutLetter = dateWithoutYear[1].split("T");
+    const formatedDate =
+      dateWithoutYear[0] +
+      "/" +
+      timeWithoutLetter[0] +
+      "-" +
+      timeWithoutLetter[1];
+    return formatedDate;
+  };
+
   return (
     <Card className={`MuiEngagementCard--01 ${className}`}>
       <CardMedia
@@ -93,15 +105,12 @@ const EventCard = event => {
           {location} <br />
         </Typography>
         <Typography className={"MuiTypography--subheading"} variant={"caption"}>
-          {date}
+          {formatDate(date)}
         </Typography>
         <Divider className={"MuiDivider-root"} light />
 
         <div className={"MuiCardContent--attendContainer"}>
           <div>
-            {/* {attendees.map(attendee => (
-              <h1>{attendee}</h1>
-            ))} */}
             {attendees.map(attendee => (
               <Avatar
                 className={"MuiAvatar-root"}
@@ -110,9 +119,6 @@ const EventCard = event => {
               />
             ))}
           </div>
-          {/* {attendees.map(attendee => {
-            return <h1>{attendee.name}</h1>;
-          })} */}
           <Themebutton content="Going" handleClick={handleGoing} />
         </div>
         {handleEditing()}
@@ -150,21 +156,26 @@ EventCard.getTheme = muiBaseTheme => ({
           margin: `${muiBaseTheme.spacing(3)}px 0`
         },
         "& .MuiTypography--heading": {
-          fontWeight: "bold"
+          fontWeight: "bold",
+          color: "white"
         },
         "& .MuiTypography--subheading": {
-          lineHeight: 1.8
+          fontSize: "0.75rem",
+          lineHeight: 1.8,
+          [muiBaseTheme.breakpoints.up("md")]: {
+            fontSize: "1rem"
+          }
         },
         "& .MuiAvatar-delete-button": {
           position: "absolute",
           right: "5%",
-          top: "-15%",
+          bottom: "50%",
           cursor: "pointer"
         },
         "& .MuiAvatar-edit-button": {
           position: "absolute",
           right: "20%",
-          top: "-15%",
+          bottom: "50%",
           cursor: "pointer"
         },
         "& .MuiAvatar-root": {
@@ -178,12 +189,4 @@ EventCard.getTheme = muiBaseTheme => ({
     }
   }
 });
-
-// EventCard.displayName = "Card";
-
-// EventCard.metadata = {
-//   name: "Engagement Card",
-//   description: "Show people's engagement"
-// };
-
 export default EventCard;

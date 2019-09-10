@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 @import "~antd/dist/antd.css";
 
+#root {
+  font-size: 12px !important;
+}
+
 body {
   background: #3d4559 !important;
 }
@@ -22,4 +26,8 @@ body {
 .item-exit-active {
   opacity: 0;
   transition: opacity 1000ms ease-in;
+}
+.ant-upload.ant-upload-select-picture-card {
+  width: 100% !important;
+  height: 8rem !important;
 }

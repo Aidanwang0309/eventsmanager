@@ -45,7 +45,7 @@ router.post(
       if (!user) {
         return res.status(400).json({
           status: 400,
-          msg: "Invalid Credentials, email is not registered"
+          msg: "Invalid Credentials"
         });
       }
 
@@ -53,7 +53,7 @@ router.post(
       if (!isMatch) {
         return res.status(400).json({
           status: 400,
-          msg: "Invalid Credentials, email and password don't match"
+          msg: "Invalid Credentials"
         });
       }
       // check jwt token

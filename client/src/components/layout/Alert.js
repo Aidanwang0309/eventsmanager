@@ -1,13 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import AlertContext from "../../context/alert/alertContext";
 import { makeStyles } from "@material-ui/core/styles";
+import { amber, green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   close: {
     padding: theme.spacing(0.5)
+  },
+  error: {
+    backgroundColor: theme.palette.error.light
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main
+  },
+  success: {
+    backgroundColor: green[600]
+  },
+  warning: {
+    backgroundColor: amber[700]
   }
 }));
 
@@ -22,51 +36,39 @@ const Alert = () => {
     }
   }, [alertContext.alerts.length]);
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleClose = () => {
     setOpen(false);
   };
 
   const classes = useStyles();
+
   return (
     alertContext.alerts.length > 0 &&
     alertContext.alerts.map(alert => (
-      <div>
+      <div key={alert.id}>
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "left"
           }}
-          variant="error"
           open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          ContentProps={{
-            "aria-describedby": "message-id"
-          }}
-          message={<span id="message-id">{alert.msg}</span>}
-          action={[
-            //   <Button
-            //     key="undo"
-            //     color="secondary"
-            //     size="small"
-            //     onClick={handleClose}
-            //   >
-            //     UNDO
-            //   </Button>,
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={classes.close}
-              onClick={handleClose}
-            >
-              <CloseIcon />
-            </IconButton>
-          ]}
-        />
+        >
+          <SnackbarContent
+            className={classes[`${alert.type}`]}
+            message={<span id="message-id">{alert.msg}</span>}
+            action={[
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                className={classes.close}
+                onClick={handleClose}
+              >
+                <CloseIcon />
+              </IconButton>
+            ]}
+          ></SnackbarContent>
+        </Snackbar>
       </div>
     ))
   );

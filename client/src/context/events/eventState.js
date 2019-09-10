@@ -21,7 +21,7 @@ const EventState = props => {
   // Initial State
 
   const initialState = {
-    events: null,
+    events: [],
     // [
     //   {
     //     name: "Gorgon City Pres. REALM",
