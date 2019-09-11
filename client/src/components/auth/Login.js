@@ -9,6 +9,7 @@ import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 import { Link } from "react-router-dom";
 import Alert from "../layout/Alert";
+import rezz from "../../assets/rezz.png";
 
 const Login = props => {
   const authContext = useContext(AuthContext);
@@ -54,52 +55,67 @@ const Login = props => {
   return (
     <ThemeProvider theme={theme}>
       <Alert />
-      <Typography
+      {/* <Typography
         align="center"
         variant="h3"
         style={{ color: "white" }}
         gutterBottom
       >
         Welcome Back
-      </Typography>
+      </Typography> */}
       <form onSubmit={onSubmit} className={classes.container} noValidate>
-        <TextField
-          id="standard-email-input"
-          label="Email"
-          className={classes.textField}
-          value={email}
-          type="email"
-          name="email"
-          autoComplete="email"
-          margin="normal"
-          variant="filled"
-          fullWidth
-          required
-          onChange={onChange}
-        />
-        <TextField
-          id="standard-password-input"
-          label="Password"
-          className={classes.textField}
-          value={password}
-          type="password"
-          name="password"
-          minLength="6"
-          autoComplete="current-password"
-          margin="normal"
-          variant="filled"
-          fullWidth
-          required
-          onChange={onChange}
-        />
-        <Typography className={classes.typography}>
-          No account ?
-          <Link className={classes.link} to="/register">
-            {" "}
-            Register Here{" "}
-          </Link>
-        </Typography>
-        <Themebutton content="SIGN IN" type="submit" value="Register" />
+        <img
+          src={rezz}
+          className={classes.welcomeImage}
+          alt="welcome page"
+        ></img>
+
+        <div className={classes.formBody}>
+          <TextField
+            id="standard-email-input"
+            label="Email"
+            className={classes.textField}
+            value={email}
+            type="email"
+            name="email"
+            autoComplete="email"
+            margin="normal"
+            variant="filled"
+            fullWidth
+            required
+            onChange={onChange}
+          />
+          <TextField
+            id="standard-password-input"
+            label="Password"
+            className={classes.textField}
+            value={password}
+            type="password"
+            name="password"
+            minLength="6"
+            autoComplete="current-password"
+            margin="normal"
+            variant="filled"
+            fullWidth
+            required
+            onChange={onChange}
+          />
+          <div className={classes.fromButtonGroup}>
+            <Themebutton
+              className={classes.button}
+              content="SIGN IN"
+              type="submit"
+              value="Register"
+            />
+            <Typography className={classes.typography}>
+              No account ?
+              <Link className={classes.link} to="/register">
+                {" "}
+                Register Here{" "}
+              </Link>
+            </Typography>
+          </div>
+        </div>
       </form>
     </ThemeProvider>
   );
@@ -108,12 +124,9 @@ const Login = props => {
 const theme = createMuiTheme({
   overrides: {
     MuiInputLabel: {
-      // Name of the component ⚛️ / style sheet
       root: {
-        // Name of the rule
-        color: "rgba(255, 255, 255, 0.63)",
+        color: "rgba(61, 69, 89, 0.4)",
         "&$focused": {
-          // increase the specificity for the pseudo class
           color: "rgba(255, 255, 255, 0.63)"
         }
       }
@@ -121,13 +134,20 @@ const theme = createMuiTheme({
 
     MuiFilledInput: {
       root: {
-        color: "white"
+        color: "#616161",
+        backgroundColor: "transparent",
+
+        "&:hover": {
+          backgroundColor: "transparent"
+        },
+        "&:focus": {
+          backgroundColor: "transparent"
+        }
       },
       underline: {
         borderBottom: "1px solid rgba(255, 255, 255, 0.63)",
 
         "&::after": {
-          // increase the specificity for the pseudo class
           borderBottom: "2px solid rgba(255, 255, 255, 0.63)"
         }
       }
@@ -138,27 +158,47 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
+    flexDirection: "row",
+    width: "60%",
+    height: "70%",
+    margin: "0 auto"
+  },
+  welcomeImage: {
+    flex: 1,
+    borderRadius: "20px 0 0 20px",
+    boxShadow: "0px 0px 4px black, -1px 6px 12px #f9b4da9e, 0 0 5px #674e53"
+  },
+  formBody: {
+    borderRadius: "0 20px 20px 0",
+    display: "flex",
     flexDirection: "column",
-    width: 400,
-    margin: "0 auto",
-    alignItems: "flex-end"
+    alignItems: "center",
+    flex: 1,
+    backgroundColor: "white",
+    padding: "3rem",
+    boxShadow: "0px 0px 4px #109645, -1px 6px 12px #44ffdd9e, 0 0 5px #3d4559"
   },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    backgroundColor: "#ffffff1c",
-    "&$focused": {
-      backgroundColor: "# f0f0f0"
-    }
+    marginRight: theme.spacing(1)
   },
+
   typography: {
-    color: "white",
-    margin: "20px 20px 0px 0px"
+    color: "#b3b2b2",
+    margin: "20px",
+    textAlign: "center"
   },
 
   link: {
     textDecoration: "none",
     color: "#ff8383c2"
+  },
+
+  fromButtonGroup: {
+    marginTop: "6rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 }));
 
