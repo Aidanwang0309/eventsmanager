@@ -27,8 +27,7 @@ const EventSchema = mongoose.Schema({
   },
 
   poster: {
-    type: String,
-    default: "image-1567892895906.png"
+    type: String
   },
 
   attendees: []

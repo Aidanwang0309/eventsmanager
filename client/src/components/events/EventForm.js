@@ -41,7 +41,7 @@ const EventForm = () => {
     location: "",
     date: `${getCurrentDate()}`,
     type: "",
-    poster: ""
+    poster: "image-1567892895906.png"
   });
 
   const { name, location, date, type } = event;

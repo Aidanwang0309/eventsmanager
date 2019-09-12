@@ -52,7 +52,7 @@ const EventState = props => {
     } catch (err) {
       dispatch({
         type: EVENT_ERROR,
-        payload: err.response.msg
+        payload: err
       });
     }
   };
@@ -69,9 +69,10 @@ const EventState = props => {
       const res = await axios.post("api/events", event, config);
       dispatch({
         type: ADD_EVENT,
-        payload: res.data
+        payload: res.data.event
       });
     } catch (err) {
+      console.log(err);
       dispatch({
         type: EVENT_ERROR,
         payload: err.response.msg
