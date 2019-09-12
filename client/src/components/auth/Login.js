@@ -158,15 +158,26 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
-    flexDirection: "row",
-    width: "60%",
+    width: "100%",
     height: "70%",
-    margin: "0 auto"
+    padding: "6rem 1rem 1rem 1rem",
+    margin: "0 auto",
+    flexDirection: "row",
+
+    [theme.breakpoints.up("sm")]: {},
+
+    [theme.breakpoints.up("md")]: {
+      width: "60%"
+    }
   },
   welcomeImage: {
+    display: "none",
     flex: 1,
     borderRadius: "20px 0 0 20px",
-    boxShadow: "0px 0px 4px black, -1px 6px 12px #f9b4da9e, 0 0 5px #674e53"
+    boxShadow: "0px 0px 4px black, -1px 6px 12px #f9b4da9e, 0 0 5px #674e53",
+    [theme.breakpoints.up("sm")]: {
+      display: "block"
+    }
   },
   formBody: {
     borderRadius: "0 20px 20px 0",

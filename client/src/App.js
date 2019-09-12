@@ -15,20 +15,33 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-function App() {
+const LoginContainer = () => (
+  <Fragment>
+    <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
+  </Fragment>
+);
+
+const DefaultContainer = () => (
+  <Fragment>
+    <Navbar />
+    <Route exact path="/" component={Home} />
+    <Route exact path="/about" component={About} />
+  </Fragment>
+);
+
+const App = () => {
   return (
     <AuthState>
       <EventState>
         <AlertState>
           <Router>
             <Fragment>
-              <Navbar />
               <div className="container">
                 <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route exact path="/about" component={About} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/(login)" component={LoginContainer} />
+                  <Route exact path="/(register)" component={LoginContainer} />
+                  <Route component={DefaultContainer} />
                 </Switch>
               </div>
             </Fragment>
@@ -37,6 +50,6 @@ function App() {
       </EventState>
     </AuthState>
   );
-}
+};
 
 export default App;

@@ -90,8 +90,8 @@ const EventCard = event => {
     <Card className={`MuiEngagementCard--01 ${className}`}>
       <CardMedia
         className={"MuiCardMedia-root"}
-        image={`http://localhost:5000/api/file/${poster}`}
-        // image={`${window.location.protocol}//${window.location.hostname}/api/file/${poster}`}
+        // image={`http://localhost:5000/api/file/${poster}`}
+        image={`${window.location.protocol}//${window.location.hostname}/api/file/${poster}`}
       />
       <CardContent className={"MuiCardContent-root"}>
         <Typography

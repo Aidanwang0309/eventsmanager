@@ -8,9 +8,9 @@
 body {
   background: #3d4559 !important;
 }
+
 .container {
   position: relative;
-  top: 50px;
 }
 
 .item-enter {
