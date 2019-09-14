@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, logout } = authContext;
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = event => {
@@ -95,7 +95,8 @@ const Navbar = ({ title, icon }) => {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "transparent !important"
+    backgroundColor: "transparent !important",
+    boxShadow: "none"
   },
 
   link: {

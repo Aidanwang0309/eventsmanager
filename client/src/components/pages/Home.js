@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext, Fragment, useEffect } from "react";
 import Events from "../events/Events";
 import EventForm from "../events/EventForm";
 import Fab from "@material-ui/core/Fab";
@@ -9,16 +9,17 @@ import EventContext from "../../context/events/eventContext";
 import AuthContext from "../../context/auth/authContext";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import AuthContainer from "./AuthContainer";
 
 const Home = () => {
   const eventContext = useContext(EventContext);
-  const authContext = useContext(AuthContext);
-
   const { editing, setEditing } = eventContext;
-  const { isAuthenticated } = authContext;
+
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, loading } = authContext;
 
   return (
-    <Fragment>
+    <AuthContainer>
       <Alert />
       <Fab
         color="primary"
@@ -41,7 +42,7 @@ const Home = () => {
         onBackdropClick={() => setEditing(false)}
         aria-labelledby="simple-dialog-title"
       >
-        {isAuthenticated ? (
+        {isAuthenticated && !loading ? (
           <EventForm />
         ) : (
           <Typography
@@ -56,7 +57,7 @@ const Home = () => {
       </Dialog>
 
       <Events />
-    </Fragment>
+    </AuthContainer>
   );
 };
 

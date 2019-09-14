@@ -21,10 +21,10 @@ const EventCard = event => {
   const authContext = useContext(AuthContext);
   const { loadUser, user } = authContext;
 
-  useEffect(() => {
-    loadUser();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   loadUser();
+  //   // eslint-disable-next-line
+  // }, []);
 
   const {
     _id,

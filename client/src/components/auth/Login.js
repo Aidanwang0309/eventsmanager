@@ -13,12 +13,14 @@ import rezz from "../../assets/rezz.png";
 
 const Login = props => {
   const authContext = useContext(AuthContext);
-  const { login, error, clearErrors, isAuthenticated } = authContext;
+  const { login, error, clearErrors, isAuthenticated, loadUser } = authContext;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   useEffect(() => {
+    loadUser();
+
     if (isAuthenticated) {
       props.history.push("/");
     }
