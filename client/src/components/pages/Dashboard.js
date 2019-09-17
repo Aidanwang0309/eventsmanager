@@ -2,7 +2,7 @@ import React, { useContext, Fragment, useEffect, useState } from "react";
 // import AuthContext from "../../context/auth/authContext";
 import SideMenu from "../layout/SideMenu";
 import Profile from "../dashboard/Profile";
-import Events from "../dashboard/Events";
+import EventsTabs from "../dashboard/EventsTabs";
 import Calendar from "../dashboard/Calendar";
 
 const Dashboard = props => {
@@ -20,7 +20,7 @@ const Dashboard = props => {
       case "profile":
         return <Profile></Profile>;
       case "events":
-        return <Events />;
+        return <EventsTabs />;
       case "calendar":
         return <Calendar />;
       default:

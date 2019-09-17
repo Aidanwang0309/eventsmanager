@@ -12,7 +12,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  UPDATE_USER
 } from "../types";
 
 const AuthState = props => {
@@ -32,16 +33,17 @@ const AuthState = props => {
   const loadUser = async () => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
-    }
-
-    try {
-      const res = await axios.get("/api/auth");
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data.user
-      });
-    } catch (err) {
-      dispatch({ type: AUTH_ERROR });
+      try {
+        const res = await axios.get("/api/auth");
+        dispatch({
+          type: USER_LOADED,
+          payload: res.data.user
+        });
+      } catch (err) {
+        dispatch({ type: AUTH_ERROR });
+      }
+    } else {
+      dispatch({ type: LOGOUT });
     }
   };
   // Register User
@@ -99,6 +101,27 @@ const AuthState = props => {
   // Log out User
   const logout = () => dispatch({ type: LOGOUT });
 
+  // Update User
+  const updateUser = async userData => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.put(`api/users/update`, userData, config);
+      dispatch({
+        type: UPDATE_USER,
+        payload: res.data.user
+      });
+    } catch (err) {
+      dispatch({
+        type: UPDATE_USER,
+        payload: err.response.msg
+      });
+    }
+  };
+
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
@@ -114,6 +137,7 @@ const AuthState = props => {
         login,
         loadUser,
         logout,
+        updateUser,
         clearErrors
       }}
     >

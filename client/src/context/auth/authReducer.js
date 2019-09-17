@@ -6,7 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  UPDATE_USER
 } from "../types";
 
 export default (state, action) => {
@@ -40,6 +41,8 @@ export default (state, action) => {
         user: null,
         error: action.payload
       };
+    case UPDATE_USER:
+      return { ...state, user: action.payload };
     case CLEAR_ERRORS:
       return {
         ...state,

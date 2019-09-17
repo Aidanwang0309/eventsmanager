@@ -6,11 +6,11 @@ import Themebutton from "../layout/Themebutton";
 import EventContext from "../../context/events/eventContext";
 import CloseIcon from "@material-ui/icons/Close";
 import EventPicture from "./EventPicture";
-import * as moment from "moment";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import FormatDate from "../../utils/formateDate";
 
 const EventForm = () => {
   const classes = useStyles();
@@ -30,16 +30,16 @@ const EventForm = () => {
     }
   }, [current]);
 
-  const getCurrentDate = () => {
-    //2019-07-01T10:30
-    let formatedCurrentTime = moment().format("YYYY-MM-DD") + "T22:00";
-    return formatedCurrentTime;
-  };
+  // const getCurrentDate = () => {
+  //   //2019-07-01T10:30
+  //   let formatedCurrentTime = moment().format("YYYY-MM-DD") + "T22:00";
+  //   return formatedCurrentTime;
+  // };
 
   const [event, setEvent] = useState({
     name: "",
     location: "",
-    date: `${getCurrentDate()}`,
+    date: `${FormatDate().getCurrentDate}`,
     type: "",
     poster: "image-1567892895906.png"
   });
@@ -68,7 +68,7 @@ const EventForm = () => {
     clearCurrent({
       name: "",
       location: "",
-      date: `${getCurrentDate()}`,
+      date: `${FormatDate().getCurrentDate}`,
       type: "",
       poster: ""
     });

@@ -7,9 +7,11 @@ const Profile = () => {
   const { user } = authContext;
 
   return (
-    <div style={{ padding: "3rem" }}>
+    <div id="profile-table" style={{ padding: "3rem", width: "80%" }}>
       <Descriptions bordered>
-        <Descriptions.Item label="User Name">{user.name}</Descriptions.Item>
+        <Descriptions.Item style={{ border: "0" }} label="User Name">
+          {user.name}
+        </Descriptions.Item>
         <Descriptions.Item label="Email" span={2}>
           {user.email}
         </Descriptions.Item>

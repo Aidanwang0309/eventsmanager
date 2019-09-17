@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
@@ -13,7 +13,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
-const Navbar = ({ title, icon }) => {
+const Navbar = props => {
+  const { title, icon } = props;
   const classes = useStyles();
 
   const authContext = useContext(AuthContext);
@@ -21,6 +22,11 @@ const Navbar = ({ title, icon }) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  // useEffect(() => {
+  //   getEvents();
+  //   // eslint-disable-next-line
+  // }, [user]);
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -32,6 +38,7 @@ const Navbar = ({ title, icon }) => {
 
   const handleLogout = () => {
     logout();
+    props.history.push("/");
   };
 
   return (
@@ -78,7 +85,12 @@ const Navbar = ({ title, icon }) => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem>
+                {" "}
+                <Link style={{ color: "black" }} to="/dashboard">
+                  Dashboard
+                </Link>
+              </MenuItem>
               <MenuItem onClick={handleLogout}>Log out</MenuItem>
             </Menu>
           </div>
@@ -129,4 +141,4 @@ Navbar.defaultProps = {
   icon: "fas fa-id-card-alt"
 };
 
-export default Navbar;
+export default withRouter(Navbar);

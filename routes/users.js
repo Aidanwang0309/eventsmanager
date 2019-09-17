@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { check, validationResult } = require("express-validator");
+const auth = require("../middleware/auth");
 
 // @route POST api/users
 // @desc Register a user
@@ -73,5 +74,32 @@ router.post(
     }
   }
 );
+
+router.put("/update", auth, async (req, res) => {
+  const { _id, name, email, avatar, date, goingEvents } = req.body;
+
+  // Build user object
+  const userField = {};
+  if (_id) userField._id = _id;
+  if (name) userField.name = name;
+  if (email) userField.email = email;
+  if (avatar) userField.avatar = avatar;
+  if (goingEvents) userField.goingEvents = goingEvents;
+  if (date) userField.date = date;
+
+  try {
+    let user = await User.findById(_id);
+    if (!user) return res.status(404).json({ msg: "user not found" });
+    user = await User.findByIdAndUpdate(
+      _id,
+      { $set: userField },
+      { new: true }
+    );
+    res.json({ status: 200, user });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;

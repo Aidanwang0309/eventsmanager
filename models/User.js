@@ -20,7 +20,8 @@ const UserSchema = mongoose.Schema({
   },
   avatar: {
     type: String
-  }
+  },
+  goingEvents: []
 });
 
 module.exports = mongoose.model("user", UserSchema);

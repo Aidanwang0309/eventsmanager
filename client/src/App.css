@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #2b3353 !important;
+  background: #3d4458 !important;
 }
 
 .container {
@@ -32,19 +32,110 @@ body {
   height: 8rem !important;
 }
 
-.ant-menu-item-selected {
-  background-color: #8080805c !important;
+/* Side Nav */
+
+#dashboard-sidenav .ant-menu-item-selected {
+  background-color: #30384c;
+}
+
+#dashboard-sidenav .ant-menu-item-selected span {
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  background-clip: text;
+  color: transparent;
 }
 
 .ant-descriptions-view {
   font-size: 2rem;
 }
 
-.ant-descriptions-item-label {
-  background-color: #7477843d !important;
-  color: #cecccc !important;
+/* profile */
+
+#profile-table .ant-descriptions-view {
+  border: 0px;
 }
 
-.ant-descriptions-item-content {
-  color: #cecccc !important;
+#profile-table .ant-descriptions-item-label {
+  background-color: #7477843d;
+  color: #cecccc;
+}
+
+#profile-table .ant-descriptions-item-content {
+  color: #cecccc;
+}
+
+#profile-table .ant-descriptions-row {
+  border-bottom: 1px solid #e8e8e852;
+}
+
+#profile-table .ant-descriptions-row:last-child {
+  border-bottom: none;
+}
+
+#profile-table .ant-descriptions-item-label {
+  border: 0px;
+}
+
+#profile-table .ant-descriptions-item-content {
+  border: 0px;
+}
+
+/* Events profile */
+#events-tab {
+  width: 80%;
+  padding: 3rem;
+}
+
+#events-tab .ant-tabs {
+  color: #d4d3d3;
+}
+
+#events-tab .ant-tabs-tab-active {
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  background-clip: text;
+  color: transparent;
+}
+#events-tab .ant-tabs-ink-bar {
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+}
+
+#events-tab .ant-pagination li a {
+  background: transparent;
+  border: none;
+  color: white;
+}
+
+#events-tab .ant-pagination li {
+  background: transparent;
+  border: none;
+  color: white;
+}
+
+#events-tab .ant-table-placeholder {
+  background: #00000008;
+}
+#events-tab .ant-table-placeholder p {
+  color: white;
+}
+
+/* Events Table */
+#events-table {
+  color: #b1b1b1;
+}
+
+#events-table th {
+  background: rgba(116, 119, 132, 0.24);
+  color: #b1b1b1;
+  border-bottom: 1px solid #e8e8e842;
+}
+
+#events-table td {
+  border-bottom: 1px solid #e8e8e842;
+}
+
+#events-table .ant-table-footer {
+  background: rgba(116, 119, 132, 0.24);
+}
+
+#events-table tr:hover td {
+  background: rgba(116, 119, 132, 0.24);
 }

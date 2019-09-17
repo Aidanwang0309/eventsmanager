@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Menu, Icon, Button } from "antd";
+import AuthContext from "../../context/auth/authContext";
 
 const SideMenu = props => {
   //   const { SubMenu } = Menu;
   const { onSelect } = props;
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
 
   return (
-    <div style={{ width: 240 }}>
+    <div id="dashboard-sidenav" style={{ width: 240 }}>
       <Menu
         style={{
           height: "100vh",
-          backgroundColor: "#364161",
+          backgroundColor: "#7477843d",
           borderRight: 0
         }}
         defaultSelectedKeys={["1"]}
@@ -29,7 +32,7 @@ const SideMenu = props => {
           }}
         >
           <p style={{ marginBottom: "3rem" }}>Welcome Back!</p>
-          <h1 style={{ color: "white" }}> Shuai Wang </h1>
+          <h1 style={{ color: "white" }}> {user.name} </h1>
         </div>
         <Menu.Item key="1" onClick={() => onSelect("profile")}>
           <Icon type="profile" />

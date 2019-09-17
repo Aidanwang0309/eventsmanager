@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useContext, useEffect, Fragment } from "react";
+import React, { useContext, useEffect, Fragment, useState } from "react";
 import {
   Avatar,
   Card,
@@ -13,18 +13,30 @@ import AuthContext from "../../context/auth/authContext";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import Themebutton from "../layout/Themebutton";
+import FormatDate from "../../utils/formateDate";
+import _ from "lodash";
+import Events from "../dashboard/EventsTabs";
+import Dialog from "@material-ui/core/Dialog";
+import { Link } from "react-router-dom";
 
 const EventCard = event => {
   const eventContext = useContext(EventContext);
-  const { deleteEvent, setCurrent, setEditing, addAttendee } = eventContext;
+  const {
+    deleteEvent,
+    setCurrent,
+    setEditing,
+    addAttendee,
+    getEvents
+  } = eventContext;
 
   const authContext = useContext(AuthContext);
-  const { loadUser, user } = authContext;
+  const { loadUser, updateUser, user } = authContext;
+  const [open, setOpen] = useState(false);
 
-  // useEffect(() => {
-  //   loadUser();
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    getEvents();
+    // eslint-disable-next-line
+  }, [user]);
 
   const {
     _id,
@@ -43,11 +55,45 @@ const EventCard = event => {
   };
 
   const handleGoing = () => {
-    let updatedAttendee = {
-      ...event,
-      attendees: [...attendees, user]
-    };
+    if (user === null) {
+      setOpen(true);
+    } else {
+      const { goingEvents } = user;
+      let updatedUser;
+      if (goingEvents.length === 0) {
+        updatedUser = {
+          ...user,
+          goingEvents: [event]
+        };
+      } else {
+        updatedUser = {
+          ...user,
+          goingEvents: [...goingEvents, event]
+        };
+      }
+      updateUser(updatedUser);
+
+      let updatedAttendee = {
+        ...event,
+        attendees: [...attendees, user]
+      };
+      addAttendee(updatedAttendee);
+    }
+  };
+
+  const handleNotGoing = () => {
     if (user !== null) {
+      const { goingEvents } = user;
+      const updatedUser = {
+        ...user,
+        goingEvents: goingEvents.filter(event => event._id !== _id)
+      };
+      updateUser(updatedUser);
+
+      let updatedAttendee = {
+        ...event,
+        attendees: attendees.filter(attendee => attendee._id !== user._id)
+      };
       addAttendee(updatedAttendee);
     }
   };
@@ -74,16 +120,13 @@ const EventCard = event => {
     }
   };
 
-  const formatDate = date => {
-    const dateWithoutYear = date.split("-").splice(1, 2);
-    const timeWithoutLetter = dateWithoutYear[1].split("T");
-    const formatedDate =
-      dateWithoutYear[0] +
-      "/" +
-      timeWithoutLetter[0] +
-      "-" +
-      timeWithoutLetter[1];
-    return formatedDate;
+  const isUserGoing = () => {
+    //return true if going
+    if (user !== null) {
+      const { goingEvents } = user;
+      if (_.find(goingEvents, { _id: _id })) return true;
+    }
+    return false;
   };
 
   return (
@@ -105,7 +148,7 @@ const EventCard = event => {
           {location} <br />
         </Typography>
         <Typography className={"MuiTypography--subheading"} variant={"caption"}>
-          {formatDate(date)}
+          {FormatDate(date).formatedCardDate}
         </Typography>
         <Divider className={"MuiDivider-root"} light />
 
@@ -119,10 +162,39 @@ const EventCard = event => {
               />
             ))}
           </div>
-          <Themebutton content="Going" handleClick={handleGoing} />
+
+          {isUserGoing() === true ? (
+            <Themebutton content="Going" handleClick={handleNotGoing} />
+          ) : (
+            <Themebutton
+              style={{
+                border: "1px solid pink",
+                color: "pink",
+                background: "transparent"
+              }}
+              content="Going"
+              handleClick={handleGoing}
+            />
+          )}
         </div>
         {handleEditing()}
       </CardContent>
+      <Dialog
+        fullWidth
+        maxWidth={"sm"}
+        open={open}
+        onBackdropClick={() => setOpen(false)}
+        aria-labelledby="simple-dialog-title"
+      >
+        <Typography
+          align="center"
+          style={{ color: "black", padding: "5rem" }}
+          gutterBottom
+        >
+          You have to login to publish the content .
+          <Link to="/login">SIGN IN</Link>
+        </Typography>
+      </Dialog>
     </Card>
   );
 };
