@@ -46,6 +46,7 @@ const EventList = props => {
     let data = [];
     const { list } = props;
     let myCreatedEvents = events.filter(event => event.creator === user._id);
+
     let myGoingEvents = user.goingEvents;
     let myPastEvents = myGoingEvents.filter(
       event => FormateDate(event.date).isPast
@@ -78,18 +79,19 @@ const EventList = props => {
         });
         return data;
       case "going":
-        myFutureEvents
-          .filter(event => event.creator === user._id)
-          .map(event => {
-            const item = {
-              name: event.name,
-              date: event.date,
-              location: event.location,
-              type: event.type
-            };
-            data.push(item);
-          });
+        console.log(myFutureEvents);
+
+        myFutureEvents.map(event => {
+          const item = {
+            name: event.name,
+            date: event.date,
+            location: event.location,
+            type: event.type
+          };
+          data.push(item);
+        });
         return data;
+
       default:
         events
           .filter(event => event.creator === user._id)
