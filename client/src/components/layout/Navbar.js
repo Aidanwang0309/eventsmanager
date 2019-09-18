@@ -44,14 +44,6 @@ const Navbar = props => {
   return (
     <AppBar position="static" className={classes.root}>
       <Toolbar className={classes.toolBar}>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="Open drawer"
-        >
-          <MenuIcon />
-        </IconButton>
         <Typography className={classes.title} variant="h6" noWrap>
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             Party Animal Beta 1.0
@@ -124,7 +116,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }

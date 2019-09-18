@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import EventContext from "../../context/events/eventContext";
 import AuthContext from "../../context/auth/authContext";
-import { Table, Divider, Tag } from "antd";
+import { Row, Col, List, Card } from "antd";
 import _ from "lodash";
 // import { userInfo } from "os";
 import FormateDate from "../../utils/formateDate";
@@ -17,30 +17,6 @@ const EventList = props => {
     getEvents();
     // eslint-disable-next-line
   }, []);
-
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name"
-      //   render: text => <a>{text}</a>
-    },
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date"
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location"
-    },
-    {
-      title: "Type",
-      key: "type",
-      dataIndex: "type"
-    }
-  ];
 
   const data = () => {
     let data = [];
@@ -62,7 +38,8 @@ const EventList = props => {
             name: event.name,
             date: event.date,
             location: event.location,
-            type: event.type
+            type: event.type,
+            poster: event.poster
           };
           data.push(item);
         });
@@ -73,20 +50,20 @@ const EventList = props => {
             name: event.name,
             date: event.date,
             location: event.location,
-            type: event.type
+            type: event.type,
+            poster: event.poster
           };
           data.push(item);
         });
         return data;
       case "going":
-        console.log(myFutureEvents);
-
         myFutureEvents.map(event => {
           const item = {
             name: event.name,
             date: event.date,
             location: event.location,
-            type: event.type
+            type: event.type,
+            poster: event.poster
           };
           data.push(item);
         });
@@ -109,12 +86,37 @@ const EventList = props => {
   };
 
   return (
-    <Table
-      id="events-table"
-      style={{ overflow: "hidden" }}
-      columns={columns}
+    <List
+      id="events-list"
+      grid={{ gutter: 16, xs: 1, sm: 1, md: 1, lg: 2, xl: 3, xxl: 3 }}
+      itemLayout="horizontal"
       dataSource={data()}
-      // footer={() => <div style={{ textAlign: "right" }}>footer</div>}
+      renderItem={item => (
+        <List.Item>
+          <Card
+            style={{
+              background: "rgba(116, 119, 132, 0.24)",
+              border: "none"
+            }}
+            title={item.name}
+          >
+            <Row gutter={16}>
+              <Col xs={0} sm={10} md={10} lg={10} xl={10}>
+                <img
+                  style={{ height: "100%", width: "100%" }}
+                  image={`${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`}
+                  // src={`http://localhost:5000/api/file/${item.poster}`}
+                  alt="event poster"
+                />
+              </Col>
+              <Col xs={24} sm={14} md={14} lg={14} xl={14}>
+                <p>{FormateDate(item.date).formatedCardDate}</p>
+                <p>{item.location}</p>
+              </Col>
+            </Row>
+          </Card>
+        </List.Item>
+      )}
     />
   );
 };

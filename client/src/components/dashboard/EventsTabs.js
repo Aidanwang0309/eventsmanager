@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
 import EventList from "./EventList";
+import { useMediaQuery } from "react-responsive";
 
 const Events = () => {
   const { TabPane } = Tabs;
@@ -10,8 +11,19 @@ const Events = () => {
     setList(key);
   };
 
+  const isTabletOrMobileDevice = useMediaQuery({
+    query: "(max-device-width: 1224px)"
+  });
+
   return (
-    <div id="events-tab">
+    <div
+      id="events-tab"
+      style={
+        isTabletOrMobileDevice
+          ? { width: "95%", padding: "2rem 1rem 0 5rem" }
+          : null
+      }
+    >
       <Tabs defaultActiveKey="Going" onChange={handleChange}>
         <TabPane tab="Going" key="going">
           <EventList list={list} />
