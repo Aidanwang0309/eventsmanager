@@ -65,6 +65,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: "30%",
       margin: "3rem auto"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "45%",
+      margin: "2rem auto"
     }
   }
 }));

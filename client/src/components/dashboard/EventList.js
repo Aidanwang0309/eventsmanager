@@ -104,7 +104,7 @@ const EventList = props => {
               <Col xs={0} sm={10} md={10} lg={10} xl={10}>
                 <img
                   style={{ height: "100%", width: "100%" }}
-                  image={`${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`}
+                  src={`${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`}
                   // src={`http://localhost:5000/api/file/${item.poster}`}
                   alt="event poster"
                 />
