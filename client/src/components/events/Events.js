@@ -61,14 +61,19 @@ const useStyles = makeStyles(theme => ({
   },
   eventCard: {
     width: "80%",
-    margin: "10% auto",
+    margin: "3rem auto",
+
     [theme.breakpoints.up("sm")]: {
-      width: "30%",
+      width: "40%",
       margin: "3rem auto"
     },
     [theme.breakpoints.up("md")]: {
-      width: "45%",
+      width: "35%",
       margin: "2rem auto"
+    },
+    [theme.breakpoints.up("lg")]: {
+      width: "30%",
+      margin: "3rem auto"
     }
   }
 }));
