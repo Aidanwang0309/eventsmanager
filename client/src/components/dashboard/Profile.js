@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
-import { Descriptions } from "antd";
-import AuthContext from "../../context/auth/authContext";
-import FormatDate from "../../utils/formateDate";
-import { useMediaQuery } from "react-responsive";
+import React, { useContext } from 'react';
+import { Descriptions } from 'antd';
+import { useAuthState } from 'src/shared/hooks';
+import { formatDate } from 'src/shared/utils';
+import { useMediaQuery } from 'react-responsive';
 
 const Profile = () => {
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const authState = useAuthState;
+  const { user } = authState;
+
   const isTabletOrMobileDevice = useMediaQuery({
-    query: "(max-device-width: 1224px)"
+    query: '(max-device-width: 1224px)'
   });
 
   return (
@@ -16,8 +17,8 @@ const Profile = () => {
       id="profile-table"
       style={
         isTabletOrMobileDevice
-          ? { width: "95%", padding: "2rem 1rem 0 5rem", margin: "0 auto" }
-          : { width: "85%", padding: "3rem", margin: "0 auto" }
+          ? { width: '95%', padding: '2rem 1rem 0 5rem', margin: '0 auto' }
+          : { width: '85%', padding: '3rem', margin: '0 auto' }
       }
     >
       <Descriptions
@@ -26,7 +27,7 @@ const Profile = () => {
         <Descriptions.Item label="User Name">{user.name}</Descriptions.Item>
         <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
         <Descriptions.Item label="Date Joined">
-          {FormatDate(user.date).formatedCardDate}
+          {formatDate(user.date).formatedCardDate}
         </Descriptions.Item>
         <Descriptions.Item label="Social Media">
           Social Media Icon Links

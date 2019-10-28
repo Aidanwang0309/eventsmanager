@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
-import Navbar from "./components/layout/Navbar";
-import Home from "./components/pages/Home";
-import About from "./components/pages/About";
-import Dashboard from "./components/pages/Dashboard";
-import AuthState from "./context/auth/AuthState";
-import AlertState from "./context/alert/AlertState";
-import EventState from "./context/events/eventState";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import setAuthToken from "./utils/setAuthToken";
-import ProtectedRoute from "./utils/protectedRoute";
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { AlertStore, AuthStore, EventStore } from 'src/context';
+import './App.css';
+
+import Navbar from './components/layout/Navbar';
+import Home from './components/pages/Home';
+import Dashboard from './components/pages/Dashboard';
+import { Login, Register } from './components/auth';
+
+import { ProtectedRoute, setAuthToken } from 'src/shared/utils';
+import { ThemeProvider } from '@material-ui/styles';
+import Theme from './shared/styles/theme';
+import { EmotionThemeProvider } from 'src/shared/hooks';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -41,29 +41,30 @@ const ProtectedContainer = () => (
 
 const App = () => {
   return (
-    <AuthState>
-      <EventState>
-        <AlertState>
-          <Router>
-            <Fragment>
-              <div className="container">
-                <Switch>
-                  <Route exact path="/login" component={LoginContainer} />
-                  <Route exact path="/register" component={LoginContainer} />
-                  <Route
-                    exact
-                    path="/dashboard"
-                    component={ProtectedContainer}
-                  />
-                  >
-                  <Route component={DefaultContainer} />
-                </Switch>
-              </div>
-            </Fragment>
-          </Router>
-        </AlertState>
-      </EventState>
-    </AuthState>
+    <ThemeProvider theme={Theme}>
+      <EmotionThemeProvider>
+        <AuthStore>
+          <EventStore>
+            <AlertStore>
+              <Router>
+                <div className="container">
+                  <Switch>
+                    <Route exact path="/login" component={LoginContainer} />
+                    <Route exact path="/register" component={LoginContainer} />
+                    <Route
+                      exact
+                      path="/dashboard"
+                      component={ProtectedContainer}
+                    />
+                    <Route component={DefaultContainer} />
+                  </Switch>
+                </div>
+              </Router>
+            </AlertStore>
+          </EventStore>
+        </AuthStore>
+      </EmotionThemeProvider>
+    </ThemeProvider>
   );
 };
 

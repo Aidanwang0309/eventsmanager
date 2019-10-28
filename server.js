@@ -1,15 +1,16 @@
 const express = require("express");
-const app = express();
+const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
 connectDB();
-
+const app = express();
+app.use(cors());
 app.use(express.json({ extended: false }));
 
 // Define Routes
 app.use("/api/users", require("./routes/users"));
-app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));
+app.use("/api/auth", require("./routes/auth"));
 app.use("/api/img/upload", require("./routes/imgUpload"));
 app.use("/api/file", require("./routes/file"));
 

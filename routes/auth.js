@@ -1,3 +1,5 @@
+const User = require("../models/User");
+const Event = require("../models/Event");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -6,15 +8,18 @@ require("dotenv").config();
 const auth = require("../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
-const User = require("../models/User");
-
 // @route Get api/auth
 // @desc Get Logged in user
 // access Private
 
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate({
+        model: Event,
+        path: "goingEvents"
+      });
     res.json({ status: 200, user });
   } catch (err) {
     console.error(err.message);

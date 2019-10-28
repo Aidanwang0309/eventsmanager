@@ -1,38 +1,40 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import EventContext from "../../context/events/eventContext";
-import AuthContext from "../../context/auth/authContext";
-import { Row, Col, List, Card } from "antd";
-import _ from "lodash";
-// import { userInfo } from "os";
-import FormateDate from "../../utils/formateDate";
+import React, { useContext, useEffect, useRef } from 'react';
+import { AuthContext } from 'src/context';
+import { useEventAction, useEventState, useAuthState } from 'src/shared/hooks';
+import { Row, Col, List, Card } from 'antd';
+import _ from 'lodash';
+import { formatDate } from 'src/shared/utils';
 
 const EventList = props => {
-  const eventContext = useContext(EventContext);
-  const { events, getEvents } = eventContext;
+  const eventState = useEventState();
+  const { events } = eventState;
 
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const eventAction = useEventAction();
+  const { getEvents } = eventAction;
+
+  const { user } = useAuthState();
+
+  const getEventRef = useRef(getEvents);
 
   useEffect(() => {
-    getEvents();
-    // eslint-disable-next-line
+    getEventRef.current();
   }, []);
 
   const data = () => {
-    let data = [];
+    const data = [];
     const { list } = props;
-    let myCreatedEvents = events.filter(event => event.creator === user._id);
+    const myCreatedEvents = events.filter(event => event.creator === user._id);
 
-    let myGoingEvents = user.goingEvents;
-    let myPastEvents = myGoingEvents.filter(
-      event => FormateDate(event.date).isPast
+    const myGoingEvents = user.goingEvents;
+    const myPastEvents = myGoingEvents.filter(
+      event => formatDate(event.date).isPast
     );
-    let myFutureEvents = myGoingEvents.filter(
-      event => FormateDate(event.date).isFuture
+    const myFutureEvents = myGoingEvents.filter(
+      event => formatDate(event.date).isFuture
     );
 
     switch (list) {
-      case "myEvents":
+      case 'myEvents':
         myCreatedEvents.map(event => {
           const item = {
             name: event.name,
@@ -44,7 +46,7 @@ const EventList = props => {
           data.push(item);
         });
         return data;
-      case "archived":
+      case 'archived':
         myPastEvents.map(event => {
           const item = {
             name: event.name,
@@ -56,7 +58,7 @@ const EventList = props => {
           data.push(item);
         });
         return data;
-      case "going":
+      case 'going':
         myFutureEvents.map(event => {
           const item = {
             name: event.name,
@@ -95,22 +97,22 @@ const EventList = props => {
         <List.Item>
           <Card
             style={{
-              background: "rgba(116, 119, 132, 0.24)",
-              border: "none"
+              background: 'rgba(116, 119, 132, 0.24)',
+              border: 'none'
             }}
             title={item.name}
           >
-            <Row gutter={16}>
+            <Row gutter={16} style={{ maxHeight: '70px', overflow: 'hidden' }}>
               <Col xs={0} sm={10} md={10} lg={10} xl={10}>
                 <img
-                  style={{ height: "100%", width: "100%" }}
-                  src={`${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`}
-                  // src={`http://localhost:5000/api/file/${item.poster}`}
+                  style={{ height: '100%', width: '100%' }}
+                  // src={`${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`}
+                  src={`http://localhost:5000/api/file/${item.poster}`}
                   alt="event poster"
                 />
               </Col>
               <Col xs={24} sm={14} md={14} lg={14} xl={14}>
-                <p>{FormateDate(item.date).formatedCardDate}</p>
+                <p>{formatDate(item.date).formatedCardDate}</p>
                 <p>{item.location}</p>
               </Col>
             </Row>

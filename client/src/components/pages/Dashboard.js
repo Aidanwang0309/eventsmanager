@@ -1,15 +1,15 @@
-import React, { useContext, Fragment, useEffect, useState } from "react";
+import React, { useContext, Fragment, useEffect, useState } from 'react';
 // import AuthContext from "../../context/auth/authContext";
-import SideMenu from "../layout/SideMenu";
-import Profile from "../dashboard/Profile";
-import EventsTabs from "../dashboard/EventsTabs";
-import Calendar from "../dashboard/Calendar";
+import SideMenu from '../layout/SideMenu';
+import Profile from '../dashboard/Profile';
+import EventsTabs from '../dashboard/EventsTabs';
+import Calendar from '../dashboard/Calendar';
 
 const Dashboard = props => {
   //   const authContext = useContext(AuthContext);
   //   const { isAuthenticated } = authContext;
 
-  const [page, setPage] = useState("profile");
+  const [page, setPage] = useState('profile');
 
   const handleSelect = page => {
     setPage(page);
@@ -17,11 +17,11 @@ const Dashboard = props => {
 
   const renderDashboard = () => {
     switch (page) {
-      case "profile":
+      case 'profile':
         return <Profile></Profile>;
-      case "events":
+      case 'events':
         return <EventsTabs />;
-      case "calendar":
+      case 'calendar':
         return <Calendar />;
       default:
         return <Profile />;
@@ -29,7 +29,7 @@ const Dashboard = props => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: 'flex' }}>
       <SideMenu onSelect={handleSelect} />
       {renderDashboard()}
     </div>

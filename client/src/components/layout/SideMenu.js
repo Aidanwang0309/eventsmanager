@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Menu, Icon, Button } from "antd";
-import AuthContext from "../../context/auth/authContext";
+import AuthContext from "../../context/auth/authTypes";
 import { useMediaQuery } from "react-responsive";
 
 const SideMenu = props => {

@@ -1,26 +1,26 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const User = require("../models/User");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const { check, validationResult } = require("express-validator");
-const auth = require("../middleware/auth");
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const { check, validationResult } = require('express-validator');
+const auth = require('../middleware/auth');
 
 // @route POST api/users
 // @desc Register a user
 // access Public
 
 router.post(
-  "/",
+  '/',
   [
-    check("name", "Please add name")
+    check('name', 'Please add name')
       .not()
       .isEmpty(),
-    check("email", "Please include a valid email").isEmail(),
+    check('email', 'Please include a valid email').isEmail(),
     check(
-      "password",
-      "Please enter a password with 6 or more characters"
+      'password',
+      'Please enter a password with 6 or more characters'
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
@@ -36,7 +36,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ status: 400, msg: "User already exists" });
+          .json({ status: 400, msg: 'User already exists' });
       }
 
       user = new User({
@@ -70,26 +70,25 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send({ status: 500, msg: "Server Error" });
+      res.status(500).send({ status: 500, msg: 'Server Error' });
     }
   }
 );
 
-router.put("/update", auth, async (req, res) => {
+router.put('/update', auth, async (req, res) => {
   const { _id, name, email, avatar, date, goingEvents } = req.body;
 
   // Build user object
   const userField = {};
-  if (_id) userField._id = _id;
   if (name) userField.name = name;
   if (email) userField.email = email;
   if (avatar) userField.avatar = avatar;
-  if (goingEvents) userField.goingEvents = goingEvents;
   if (date) userField.date = date;
+  if (goingEvents) userField.goingEvents = goingEvents.map(event => event._id);
 
   try {
     let user = await User.findById(_id);
-    if (!user) return res.status(404).json({ msg: "user not found" });
+    if (!user) return res.status(404).json({ msg: 'user not found' });
     user = await User.findByIdAndUpdate(
       _id,
       { $set: userField },
@@ -98,7 +97,7 @@ router.put("/update", auth, async (req, res) => {
     res.json({ status: 200, user });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 

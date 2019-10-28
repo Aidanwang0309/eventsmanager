@@ -1,9 +1,9 @@
+const Image = require("../models/ImageUpload");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
 const conn = mongoose.connection;
-const Image = require("../models/ImageUpload");
 const auth = require("../middleware/auth");
 let gfs;
 

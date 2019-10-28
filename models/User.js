@@ -21,7 +21,9 @@ const UserSchema = mongoose.Schema({
   avatar: {
     type: String
   },
-  goingEvents: []
+  goingEvents: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "event" }]
+  }
 });
 
 module.exports = mongoose.model("user", UserSchema);

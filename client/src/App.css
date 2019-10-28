@@ -1,12 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
-@import "~antd/dist/antd.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import '~antd/dist/antd.css';
 
 #root {
   font-size: 12px;
-}
-
-body {
-  background: #3d4458 !important;
 }
 
 .container {

@@ -1,9 +1,9 @@
+const Event = require("../models/Event");
+const User = require("../models/User");
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
-const User = require("../models/User");
-const Event = require("../models/Event");
 
 // @route Get api/events
 // @desc Get all events
@@ -11,11 +11,33 @@ const Event = require("../models/Event");
 
 router.get("/", async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: 1 });
+    const events = await Event.find()
+      .sort({ date: 1 })
+      .populate({
+        model: User,
+        path: "attendees"
+      });
     res.json({ status: 200, events });
   } catch (err) {
     console.error(err.message);
     res.status(500).send({ status: 200, msg: "Server Error" });
+  }
+});
+
+// @route Get api/events/:id
+// @desc event info by id
+// access Public
+
+router.get("/:id", async (req, res) => {
+  try {
+    const event = await Event.findOne({ _id: req.params.id }).populate({
+      model: User,
+      path: "attendees"
+    });
+    res.json({ status: 200, event });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ status: 500, msg: "Server Error" });
   }
 });
 
