@@ -54,7 +54,7 @@ const EventPicture = (props: EventPictureProps) => {
   const uploadButton = (
     <div>
       <Icon type={upload.loading ? 'loading' : 'plus'} />
-      <div className='ant-upload-text'>Upload</div>
+      <div className="ant-upload-text">Upload</div>
     </div>
   );
 
@@ -62,17 +62,18 @@ const EventPicture = (props: EventPictureProps) => {
 
   return (
     <Upload
-      accept='image/*'
-      name='image'
-      listType='picture-card'
+      accept="image/*"
+      name="image"
+      listType="picture-card"
       showUploadList={false}
       headers={{ 'x-auth-token': `${localStorage.token}` }}
-      action='http://localhost:5000/api/img/upload'
+      // action="http://localhost:5000/api/img/upload"
+      action={`${window.location.protocol}//${window.location.hostname}/api/img/upload`}
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
       {url ? (
-        <img src={url} alt='avatar' style={{ width: '100%' }} />
+        <img src={url} alt="avatar" style={{ width: '100%' }} />
       ) : (
         uploadButton
       )}
