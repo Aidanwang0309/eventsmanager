@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { AuthActionContext } from 'src/context';
 
 const useAuthAction = () => {
@@ -6,7 +6,8 @@ const useAuthAction = () => {
   if (context === undefined) {
     throw new Error(`useAuthAction must be used within a AuthProvider`);
   }
-  return context;
+  const contextRef = useRef(context).current;
+  return contextRef;
 };
 
 export default useAuthAction;

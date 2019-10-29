@@ -1,9 +1,9 @@
-import { createMuiTheme, Paper } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core';
 
 export const themeDark = createMuiTheme({
   palette: {
     primary: {
-      light: 'rgba(183, 183, 183, 0.2)',
+      light: '#565B6C',
       main: '#3d4458',
       dark: '#151d2f',
       contrastText: '#e0e0e0'
@@ -16,7 +16,11 @@ export const themeDark = createMuiTheme({
     },
     background: {
       default: '#3d4458',
-      paper: 'rgba(183, 183, 183, 0.2)'
+      paper: '#565B6C'
+    },
+    text: {
+      primary: '#dcdcdc',
+      secondary: '#ffffff'
     }
   }
 });
@@ -30,7 +34,7 @@ export const themeLight = createMuiTheme({
       contrastText: '#424242'
     },
     secondary: {
-      light: '#ffffff',
+      light: '#d0d0d0',
       main: '#ffebee',
       dark: '#ccb9bc',
       contrastText: '#455a64'
@@ -38,6 +42,10 @@ export const themeLight = createMuiTheme({
     background: {
       default: '#fff',
       paper: '#F5F5F6'
+    },
+    text: {
+      primary: '#424242',
+      secondary: '000000'
     }
   }
 });

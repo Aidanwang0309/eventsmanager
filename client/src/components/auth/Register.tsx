@@ -3,7 +3,6 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  Fragment,
   ReactElement,
   ChangeEvent,
   FormEvent
@@ -12,7 +11,7 @@ import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
 import { AlertContext } from 'src/context';
-import { useLoadUser, useAuthAction, useAuthState } from 'src/shared/hooks';
+import { useAuthAction, useAuthState } from 'src/shared/hooks';
 import { Alert, Button, BUTTON_VARIANTS } from 'src/shared/components';
 import Rezz from '../../assets/rezz.png';
 
@@ -45,7 +44,6 @@ const Register = (props: RegisterProps): ReactElement => {
   });
   const { name, email, password, password2 } = user;
 
-  useLoadUser({ routerProps: props, action: 'toMain' });
   useEffect(() => {
     if (error === 'User already exists') {
       setAlert({ msg: error, type: 'error' });
@@ -73,8 +71,8 @@ const Register = (props: RegisterProps): ReactElement => {
   };
 
   return (
-    <Fragment>
-      <form onSubmit={onSubmit} className={classes.container} noValidate>
+    <div className={classes.container}>
+      <form onSubmit={onSubmit} className={classes.formContainer} noValidate>
         <img
           src={Rezz}
           className={classes.welcomeImage}
@@ -149,13 +147,16 @@ const Register = (props: RegisterProps): ReactElement => {
         </div>
         <Alert />
       </form>
-    </Fragment>
+    </div>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      background: theme.palette.primary.main
+    },
+    formContainer: {
       display: 'flex',
       width: '100%',
       height: '70%',

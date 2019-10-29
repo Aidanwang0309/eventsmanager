@@ -8,8 +8,8 @@ import Home from './components/pages/Home';
 import Dashboard from './components/pages/Dashboard';
 import { Login, Register } from './components/auth';
 
-import { ProtectedRoute, setAuthToken } from 'src/shared/utils';
-import { ThemeProvider } from '@material-ui/styles';
+import { setAuthToken } from 'src/shared/utils';
+import { ThemeProvider, styled } from '@material-ui/styles';
 import Theme from './shared/styles/theme';
 import { EmotionThemeProvider } from 'src/shared/hooks';
 
@@ -32,39 +32,39 @@ const DefaultContainer = () => (
   </Fragment>
 );
 
-const ProtectedContainer = () => (
-  <Fragment>
-    <Navbar />
-    <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-  </Fragment>
-);
+// const ProtectedContainer = () => (
+//   <Fragment>
+//     <Navbar />
+//     <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+//   </Fragment>
+// );
+
+const MyThemeComponent = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  minHeight: '100vh'
+}));
 
 const App = () => {
   return (
-    <ThemeProvider theme={Theme}>
-      <EmotionThemeProvider>
+    <EmotionThemeProvider>
+      <ThemeProvider theme={Theme}>
         <AuthStore>
           <EventStore>
             <AlertStore>
               <Router>
-                <div className="container">
+                <MyThemeComponent>
                   <Switch>
                     <Route exact path="/login" component={LoginContainer} />
                     <Route exact path="/register" component={LoginContainer} />
-                    <Route
-                      exact
-                      path="/dashboard"
-                      component={ProtectedContainer}
-                    />
                     <Route component={DefaultContainer} />
                   </Switch>
-                </div>
+                </MyThemeComponent>
               </Router>
             </AlertStore>
           </EventStore>
         </AuthStore>
-      </EmotionThemeProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </EmotionThemeProvider>
   );
 };
 

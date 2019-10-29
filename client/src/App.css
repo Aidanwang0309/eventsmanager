@@ -1,12 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import '~antd/dist/antd.css';
 
 #root {
   font-size: 12px;
-}
-
-.container {
-  position: relative;
 }
 
 .item-enter {
@@ -31,7 +26,7 @@
 /* Side Nav */
 
 #dashboard-sidenav .ant-menu-item-selected {
-  background-color: #30384c;
+  background-color: #30384cc4;
 }
 #dashboard-sidenav {
   z-index: 99;
@@ -47,47 +42,6 @@
   font-size: 2rem;
 }
 
-/* profile */
-
-#profile-table .ant-descriptions-view {
-  border: 0px;
-}
-
-#profile-table .ant-descriptions-item-label {
-  color: #cecccc;
-}
-
-#profile-table .ant-descriptions-item-content {
-  color: #cecccc;
-}
-
-#profile-table .ant-descriptions-row {
-  border-bottom: 1px solid #fafafa1a;
-}
-
-#profile-table .ant-descriptions-row:last-child {
-  border-bottom: none;
-}
-
-#profile-table .ant-descriptions-item-label {
-  border: 0px;
-}
-
-#profile-table .ant-descriptions-item-content {
-  border: 0px;
-}
-
-/* Events profile */
-#events-tab {
-  width: 85%;
-  padding: 3rem;
-  margin: 0 auto;
-}
-
-#events-tab .ant-tabs {
-  color: #d4d3d3;
-}
-
 #events-tab .ant-tabs-tab-active {
   background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
   background-clip: text;
@@ -96,63 +50,3 @@
 #events-tab .ant-tabs-ink-bar {
   background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
 }
-
-#events-tab .ant-pagination li a {
-  background: transparent;
-  border: none;
-  color: white;
-}
-
-#events-tab .ant-pagination li {
-  background: transparent;
-  border: none;
-  color: white;
-}
-
-#events-tab .ant-table-placeholder {
-  background: #00000008;
-}
-#events-tab .ant-table-placeholder p {
-  color: white;
-}
-
-/* event list */
-#events-list .ant-card-head-title {
-  color: rgba(255, 255, 255, 0.65);
-}
-#events-list .ant-card-body p {
-  color: rgba(255, 255, 255, 0.65);
-}
-#events-list .ant-card-head-title {
-  color: rgba(255, 255, 255, 0.65);
-}
-#events-list .ant-card-head-title {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-#events-list .ant-card-head {
-  border-bottom: 1px solid #ffc0cb54;
-}
-
-/* Events Table */
-/* #events-table {
-  color: #b1b1b1;
-}
-
-#events-table th {
-  background: rgba(116, 119, 132, 0.24);
-  color: #b1b1b1;
-  border-bottom: 1px solid #e8e8e842;
-}
-
-#events-table td {
-  border-bottom: 1px solid #e8e8e842;
-}
-
-#events-table .ant-table-footer {
-  background: rgba(116, 119, 132, 0.24);
-}
-
-#events-table tr:hover td {
-  background: rgba(116, 119, 132, 0.24);
-} */

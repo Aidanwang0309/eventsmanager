@@ -32,7 +32,7 @@
 
 ### Params
 
-    |params		   |required   |type      |desc
+    |params		 |required   |type      |desc
     |email       |Y          |string    |email
     |password    |Y          |string    |password
 
@@ -65,7 +65,7 @@
 
 ### Params
 
-    |params		            |required   |type       |desc
+    |params		          |required   |type       |desc
     |username             |Y          |string     |username
     |email                |Y          |string     |email
     |password             |N          |string     |password
@@ -100,7 +100,7 @@
 
 ### Params
 
-    |params		            |required   |type       |desc
+    |params		          |required   |type       |desc
     |token                |Y          |string     |axios request header token
 
 ### Response：
@@ -114,6 +114,7 @@
             "email": "test@test.com",
             "date": "2019-08-27T18:47:28.705Z",
             "avatar": "https://ui-avatars.com/api/?name=Test",
+            "goingEvents": [],
             "__v": 0
         }
     }
@@ -157,6 +158,7 @@
                         "email": "elviswang93@gmail.com",
                         "date": "2019-08-27T18:49:30.492Z",
                         "avatar": "https://ui-avatars.com/api/?name=shuai",
+                        "goingEvents":[5d7337192ddb92866acbc4cc[ref]],
                         "__v": 0
                     }
                 ],
@@ -177,6 +179,7 @@
                         "email": "elviswang93@gmail.com",
                         "date": "2019-08-27T18:49:30.492Z",
                         "avatar": "https://ui-avatars.com/api/?name=shuai",
+                         "goingEvents":[],
                         "__v": 0
                     }
                 ],
@@ -210,7 +213,7 @@
 
 ### Params
 
-    |params		            |required   |type       |desc
+    |params		          |required   |type       |desc
     |name                 |N          |string     |event name
     |date                 |N          |string     |event date
     |location             |N          |string     |event location

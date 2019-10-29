@@ -3,7 +3,6 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  Fragment,
   ReactElement,
   ChangeEvent,
   FormEvent
@@ -48,7 +47,7 @@ const Login = (props: LoginProps): ReactElement => {
   });
   const { email, password } = user;
 
-  useLoadUser({ routerProps: props, action: 'toMain' });
+  useLoadUser('');
 
   useEffect(() => {
     if (error) {
@@ -63,7 +62,6 @@ const Login = (props: LoginProps): ReactElement => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
     if (email === '' || password === '') {
       setAlert({ msg: 'Please enter all fields', type: 'warning' });
       return;
@@ -80,9 +78,9 @@ const Login = (props: LoginProps): ReactElement => {
   };
 
   return (
-    <Fragment>
+    <div className={classes.container}>
       <Alert />
-      <form onSubmit={onSubmit} className={classes.container} noValidate>
+      <form onSubmit={onSubmit} className={classes.formContainer} noValidate>
         <img
           src={Rezz}
           className={classes.welcomeImage}
@@ -129,20 +127,22 @@ const Login = (props: LoginProps): ReactElement => {
             <Typography className={classes.typography}>
               No account ?
               <Link className={classes.link} to="/register">
-                {' '}
-                Register Here{' '}
+                Register Here
               </Link>
             </Typography>
           </div>
         </div>
       </form>
-    </Fragment>
+    </div>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      background: theme.palette.primary.main
+    },
+    formContainer: {
       display: 'flex',
       width: '100%',
       height: '70%',

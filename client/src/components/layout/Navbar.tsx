@@ -1,9 +1,7 @@
-import React, { useContext, useState, MouseEvent, ReactElement } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import React, { useState, MouseEvent } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useAuthAction, useAuthState, useTheme } from 'src/shared/hooks';
-
 import EventFilter from '../events/EventFilter';
 import {
   AppBar,
@@ -19,17 +17,10 @@ import {
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-type NavbarProps = {
-  title: string;
-  icon: string;
-};
-
-type NavWithRouter = NavbarProps & RouteComponentProps;
-
-const NavBar = (props: NavWithRouter): ReactElement => {
+const NavBar = () => {
   const classes = useStyles();
   const themeState = useTheme();
-  const { title = 'Party Animal', icon = 'fas fa-id-card-alt' } = props;
+  const history = useHistory();
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const open = Boolean(anchorEl);
@@ -46,18 +37,20 @@ const NavBar = (props: NavWithRouter): ReactElement => {
   };
 
   const handleLogout = () => {
+    handleClose();
     logout();
-    props.history.push('/');
+    history.push('/');
   };
 
   return (
-    <AppBar position="static" className={classes.root}>
+    <AppBar className={classes.root}>
       <Toolbar className={classes.toolBar}>
         <Typography className={classes.title} variant="h6" noWrap>
           <Link to="/" className={classes.link}>
             Party Animal Beta 1.0
           </Link>
         </Typography>
+        <EventFilter />
         <Switch
           checked={!themeState.light}
           onChange={() => themeState.toggleTheme()}
@@ -65,8 +58,6 @@ const NavBar = (props: NavWithRouter): ReactElement => {
           color="default"
           inputProps={{ 'aria-label': 'primary checkbox' }}
         />
-        <EventFilter />
-
         {isAuthenticated ? (
           <div>
             <IconButton
@@ -94,8 +85,11 @@ const NavBar = (props: NavWithRouter): ReactElement => {
               onClose={handleClose}
             >
               <MenuItem>
-                {' '}
-                <Link style={{ color: 'black' }} to="/dashboard">
+                <Link
+                  onClick={() => handleClose()}
+                  style={{ color: 'black' }}
+                  to="/dashboard"
+                >
                   Dashboard
                 </Link>
               </MenuItem>
@@ -117,7 +111,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       backgroundColor: 'transparent !important',
-      boxShadow: 'none'
+      boxShadow: 'none',
+      position: 'fixed'
     },
     link: {
       textDecoration: 'none',
@@ -142,4 +137,4 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default withRouter(NavBar);
+export default NavBar;

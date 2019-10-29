@@ -10,10 +10,16 @@
   transition: all 0.3s easeIn;
   font-weight: 500;
   letter-spacing: 0.2rem;
+  height: 45px;
 }
 
 .button:hover {
   opacity: 0.9;
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
 }
 
 .default {

@@ -1,30 +1,24 @@
 import { useEffect, useRef } from 'react';
 import { useAuthAction, useAuthState } from 'src/shared/hooks';
-import { RouteComponentProps } from 'react-router';
+import { useHistory } from 'react-router';
 
-type useLoadUserProps = {
-  routerProps?: RouteComponentProps;
-  action?: 'toMain' | 'toLast';
-};
-
-const useLoadUser = ({ routerProps, action }: useLoadUserProps = {}) => {
-  const authAction = useAuthAction();
-  const { loadUser } = authAction;
-
-  const authState = useAuthState();
-  const { isAuthenticated } = authState;
-
-  const loadUserRef = useRef(loadUser);
+const useLoadUser = (type: string) => {
+  const history = useHistory();
+  const isFirstRun = useRef(true);
+  const { loadUser } = useAuthAction();
+  const { isAuthenticated } = useAuthState();
 
   useEffect(() => {
-    loadUserRef.current();
-  }, []);
+    loadUser();
+  }, [loadUser]);
 
   useEffect(() => {
-    if (routerProps && action === 'toMain') {
-      isAuthenticated && routerProps.history.push('/');
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
     }
-  }, [action, isAuthenticated, routerProps]);
+    isAuthenticated ? history.push(`/${type}`) : history.push(`/login`);
+  }, [history, isAuthenticated, type]);
 };
 
 export default useLoadUser;

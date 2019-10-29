@@ -1,6 +1,5 @@
 import React, {
   useEffect,
-  useRef,
   Fragment,
   useState,
   ReactElement,
@@ -49,14 +48,8 @@ const EventCard = (event: EventCardProps) => {
 
   const { _id, name, date, location, creator, attendees, poster, type } = event;
 
-  const { user, isAuthenticated } = useAuthState();
-  const { loadUser, updateUser } = useAuthAction();
-  const loadUserRef = useRef(loadUser);
-
-  useEffect(() => {
-    loadUserRef.current();
-  }, [isAuthenticated]);
-  // console.log(user);
+  const { user } = useAuthState();
+  const { updateUser } = useAuthAction();
 
   const handleDelete = () => {
     deleteEvent({ id: _id, poster });
@@ -261,7 +254,11 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       height: '45px',
-      overFlow: 'hidden'
+      overFlow: 'hidden',
+      '& button': {
+        color: theme.palette.primary.contrastText,
+        borderColor: theme.palette.secondary.light
+      }
     },
     MuiDivider: {
       margin: `${theme.spacing(3)}px 0`

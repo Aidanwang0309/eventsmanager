@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  ChangeEvent,
-  FormEvent
-} from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useEventAction, useEventState } from 'src/shared/hooks';
 import { IEvent } from 'src/context/events/eventTypes';
 
@@ -91,7 +85,12 @@ const EventForm = () => {
         }}
       />
       <div className={classes.formHeader}>
-        <Typography variant='h5' component='h5' gutterBottom>
+        <Typography
+          color='textPrimary'
+          variant='h5'
+          component='h5'
+          gutterBottom
+        >
           {current ? 'Update event' : 'Add event'}
         </Typography>
       </div>
@@ -170,17 +169,24 @@ const EventForm = () => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      color: theme.palette.primary.dark,
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: 'space-evenly',
       flexDirection: 'column',
-      margin: '10% 5%'
+      margin: '10% 5%',
+      '& input': {
+        color: '#3e3e3e'
+      }
     },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
-      width: '100%'
+      width: '100%',
+      '& ul': {
+        backgroundColor: '#F5F5F6'
+      }
     },
 
     closeButton: {
@@ -192,7 +198,8 @@ const useStyles = makeStyles((theme: Theme) =>
     formHeader: {
       top: '1.5rem',
       left: '2.5rem',
-      position: 'absolute'
+      position: 'absolute',
+      color: theme.palette.primary.dark
     },
     formBody: {
       marginTop: '2.5rem',

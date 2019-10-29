@@ -1,6 +1,5 @@
-import React, { useState, useContext, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useEventAction } from 'src/shared/hooks';
-
 import { fade } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase, makeStyles, Theme, createStyles } from '@material-ui/core';

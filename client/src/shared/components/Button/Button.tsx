@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, ReactElement } from 'react';
 import styles from './Button.module.css';
 import classNames from 'classnames';
 
@@ -9,7 +9,7 @@ export const VARIANTS = {
 
 type ButtonProps = {
   variant: string;
-  children: string;
+  children: string | ReactElement;
   type?: 'button' | 'submit' | 'reset';
   style?: object;
   onClick?: (e: any) => void;

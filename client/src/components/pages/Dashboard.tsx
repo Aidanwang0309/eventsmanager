@@ -1,17 +1,15 @@
-import React, { useContext, Fragment, useEffect, useState } from 'react';
-// import AuthContext from "../../context/auth/authContext";
+import React, { useState } from 'react';
+import { useLoadUser } from 'src/shared/hooks';
 import SideMenu from '../layout/SideMenu';
 import Profile from '../dashboard/Profile';
 import EventsTabs from '../dashboard/EventsTabs';
 import Calendar from '../dashboard/Calendar';
 
-const Dashboard = props => {
-  //   const authContext = useContext(AuthContext);
-  //   const { isAuthenticated } = authContext;
-
+const Dashboard = () => {
+  useLoadUser('dashboard');
   const [page, setPage] = useState('profile');
 
-  const handleSelect = page => {
+  const handleSelect = (page: string) => {
     setPage(page);
   };
 
@@ -29,7 +27,15 @@ const Dashboard = props => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div
+      style={{
+        display: 'flex',
+        // top: '64px',
+        paddingTop: '64px',
+        width: '100%',
+        position: 'relative'
+      }}
+    >
       <SideMenu onSelect={handleSelect} />
       {renderDashboard()}
     </div>

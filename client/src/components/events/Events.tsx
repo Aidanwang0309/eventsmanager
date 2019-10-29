@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useEventAction, useEventState } from 'src/shared/hooks';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
@@ -10,25 +10,23 @@ import {
 import EventCard from './EventCard';
 
 const Events = () => {
-  const eventState = useEventState();
-  const { events, filtered, eventLoading } = eventState;
-
-  const eventAction = useEventAction();
-  const { getEvents } = eventAction;
+  const { events, filtered, eventLoading } = useEventState();
+  const { getEvents } = useEventAction();
 
   const classes = useStyles();
   const eventsList = filtered || events;
 
-  const getEventRef = useRef(getEvents);
-
   useEffect(() => {
-    getEventRef.current();
-  }, []);
+    getEvents();
+    console.log('here');
+  }, [getEvents]);
 
   return (
     <Fragment>
       {eventLoading ? (
-        <CircularProgress />
+        <div className={classes.loadingContainer}>
+          <CircularProgress color="secondary" size="3rem" />
+        </div>
       ) : (
         <TransitionGroup className={classes.eventsContainer}>
           {eventsList.map(event => (
@@ -53,9 +51,17 @@ const Events = () => {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    loadingContainer: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
     eventsContainer: {
-      background: theme.palette.background.default,
       display: 'block',
+      marginTop: '50px',
       [theme.breakpoints.up('sm')]: {
         display: 'flex',
         flexWrap: 'wrap'

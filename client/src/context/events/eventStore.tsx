@@ -24,14 +24,14 @@ import {
   // GET_EVENTS_BY_ID
 } from '../types';
 
-type EventStoreProps = {
+type IEventStore = {
   children: ReactNode;
 };
 
 export const EventStateContext = createContext({} as EventStateProps);
 export const EventActionContext = createContext({} as EventActionProps);
 
-const EventStore = <T extends EventStoreProps>(props: T) => {
+const EventStore = <T extends IEventStore>(props: T) => {
   const initialState: EventStateProps = {
     events: [
       {
@@ -196,33 +196,33 @@ const EventStore = <T extends EventStoreProps>(props: T) => {
   };
 
   return (
-    <EventStateContext.Provider
+    <EventActionContext.Provider
       value={{
-        events: state.events,
-        filtered: state.filtered,
-        editing: state.editing,
-        error: state.error,
-        current: state.current,
-        eventLoading: state.eventLoading
+        getEvents,
+        addEvent,
+        updateEvent,
+        deleteEvent,
+        setCurrent,
+        clearCurrent,
+        setEditing,
+        filterEvents,
+        clearFilter,
+        addAttendee
       }}
     >
-      <EventActionContext.Provider
+      <EventStateContext.Provider
         value={{
-          getEvents,
-          addEvent,
-          updateEvent,
-          deleteEvent,
-          setCurrent,
-          clearCurrent,
-          setEditing,
-          filterEvents,
-          clearFilter,
-          addAttendee
+          events: state.events,
+          filtered: state.filtered,
+          editing: state.editing,
+          error: state.error,
+          current: state.current,
+          eventLoading: state.eventLoading
         }}
       >
         {props.children}
-      </EventActionContext.Provider>
-    </EventStateContext.Provider>
+      </EventStateContext.Provider>
+    </EventActionContext.Provider>
   );
 };
 
