@@ -1,5 +1,6 @@
 import React, {
   useEffect,
+  useLayoutEffect,
   Fragment,
   useState,
   ReactElement,
@@ -38,6 +39,7 @@ type EventCardProps = {
   creator: string;
   attendees: IUser[];
   poster: string;
+  // user: IUser | null;
 };
 
 const EventCard = (event: EventCardProps) => {
@@ -46,10 +48,19 @@ const EventCard = (event: EventCardProps) => {
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
 
-  const { _id, name, date, location, creator, attendees, poster, type } = event;
-
-  const { user } = useAuthState();
+  const {
+    _id,
+    name,
+    date,
+    location,
+    creator,
+    attendees,
+    poster,
+    type
+    // user
+  } = event;
   const { updateUser } = useAuthAction();
+  const { user } = useAuthState();
 
   const handleDelete = () => {
     deleteEvent({ id: _id, poster });
@@ -61,19 +72,20 @@ const EventCard = (event: EventCardProps) => {
       return;
     }
 
+    const attendeeUpdatedEvent = {
+      ...event,
+      attendees: [...attendees, user]
+    };
+
     const { goingEvents } = user;
 
     const updatedUser = {
       ...user,
       goingEvents: goingEvents.length === 0 ? [event] : [...goingEvents, event]
     };
-    updateUser(updatedUser);
 
-    const attendeeUpdatedEvent = {
-      ...event,
-      attendees: [...attendees, user]
-    };
     addAttendee(attendeeUpdatedEvent);
+    updateUser(updatedUser);
     // getEventById(_id);
     // [...attendees.map(attendee => attendee._id), user._id]
     // [...[attendees._id], user._id]
@@ -98,9 +110,6 @@ const EventCard = (event: EventCardProps) => {
       attendees: attendees.filter(attendee => attendee._id !== user._id)
     };
     addAttendee(attendeeUpdatedEvent);
-    // attendees
-    //   .map(attendee => attendee._id)
-    //   .filter(attendeeId => attendeeId !== user._id)
   };
 
   const handleEditing = (): ReactElement | null => {
@@ -122,7 +131,6 @@ const EventCard = (event: EventCardProps) => {
   };
 
   const isUserGoing = () => {
-    //return true if going
     if (user !== null) {
       const { goingEvents } = user;
       if (_.find(goingEvents, { _id: _id })) return true;
@@ -296,10 +304,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const eventPropsAreEqual = (prev: EventCardProps, next: EventCardProps) => {
-  return (
-    prev.attendees.length === next.attendees.length && _.isEqual(prev, next)
-  );
-};
+// const eventPropsAreEqual = (prev: EventCardProps, next: EventCardProps) => {
+//   return _.isEqual(prev, next)
+// };
 
-export default memo(EventCard, eventPropsAreEqual);
+// export default memo(EventCard, eventPropsAreEqual);
+export default EventCard;

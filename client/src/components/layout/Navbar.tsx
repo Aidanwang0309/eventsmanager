@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, memo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useAuthAction, useAuthState, useTheme } from 'src/shared/hooks';
@@ -137,4 +137,4 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default NavBar;
+export default memo(NavBar);

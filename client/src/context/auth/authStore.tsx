@@ -140,32 +140,32 @@ export const AuthStore = <T extends AuthStoreProps>(props: T) => {
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
-    <AuthActionContext.Provider
+    <AuthStateContext.Provider
       value={
         {
-          register,
-          login,
-          loadUser,
-          logout,
-          updateUser,
-          clearErrors
-        } as AuthActionProps
+          token: state.token,
+          isAuthenticated: state.isAuthenticated,
+          loading: state.loading,
+          error: state.error,
+          user: state.user
+        } as AuthStateProps
       }
     >
-      <AuthStateContext.Provider
+      <AuthActionContext.Provider
         value={
           {
-            token: state.token,
-            isAuthenticated: state.isAuthenticated,
-            loading: state.loading,
-            error: state.error,
-            user: state.user
-          } as AuthStateProps
+            register,
+            login,
+            loadUser,
+            logout,
+            updateUser,
+            clearErrors
+          } as AuthActionProps
         }
       >
         {props.children}
-      </AuthStateContext.Provider>
-    </AuthActionContext.Provider>
+      </AuthActionContext.Provider>
+    </AuthStateContext.Provider>
   );
 };
 

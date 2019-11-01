@@ -1,29 +1,30 @@
-const User = require("../models/User");
-const Event = require("../models/Event");
-const express = require("express");
+const User = require('../models/User');
+const Event = require('../models/Event');
+const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const auth = require("../middleware/auth");
-const { check, validationResult } = require("express-validator");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const auth = require('../middleware/auth');
+const { check, validationResult } = require('express-validator');
 
 // @route Get api/auth
 // @desc Get Logged in user
 // access Private
 
-router.get("/", auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
-      .select("-password")
+      .select('-password')
       .populate({
         model: Event,
-        path: "goingEvents"
+        path: 'goingEvents'
       });
+    console.log(user);
     res.json({ status: 200, user });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ status: 500, msg: "Server Error" });
+    res.status(500).send({ status: 500, msg: 'Server Error' });
   }
 });
 
@@ -32,10 +33,10 @@ router.get("/", auth, async (req, res) => {
 // access Public
 
 router.post(
-  "/",
+  '/',
   [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists()
+    check('email', 'Please include a valid email').isEmail(),
+    check('password', 'Password is required').exists()
   ],
   async (req, res) => {
     // check validator
@@ -50,7 +51,7 @@ router.post(
       if (!user) {
         return res.status(400).json({
           status: 400,
-          msg: "Invalid Credentials"
+          msg: 'Invalid Credentials'
         });
       }
 
@@ -58,7 +59,7 @@ router.post(
       if (!isMatch) {
         return res.status(400).json({
           status: 400,
-          msg: "Invalid Credentials"
+          msg: 'Invalid Credentials'
         });
       }
       // check jwt token
@@ -80,7 +81,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send({ status: 500, msg: "Server Error" });
+      res.status(500).send({ status: 500, msg: 'Server Error' });
     }
   }
 );

@@ -1,5 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
-import { useEventAction, useEventState } from 'src/shared/hooks';
+import {
+  useEventAction,
+  useEventState,
+  useAuthAction,
+  useAuthState
+} from 'src/shared/hooks';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
   makeStyles,
@@ -10,16 +15,22 @@ import {
 import EventCard from './EventCard';
 
 const Events = () => {
-  const { events, filtered, eventLoading } = useEventState();
-  const { getEvents } = useEventAction();
-
   const classes = useStyles();
-  const eventsList = filtered || events;
 
+  // const { user } = useAuthState();
+  // const { loadUser } = useAuthAction();
+
+  // useEffect(() => {
+  //   loadUser();
+  // }, [loadUser]);
+
+  const { getEvents } = useEventAction();
   useEffect(() => {
     getEvents();
-    console.log('here');
   }, [getEvents]);
+
+  const { events, filtered, eventLoading } = useEventState();
+  const eventsList = filtered || events;
 
   return (
     <Fragment>
@@ -40,6 +51,7 @@ const Events = () => {
                 creator={event.creator}
                 attendees={event.attendees}
                 poster={event.poster}
+                // user={user}
               />
             </CSSTransition>
           ))}
@@ -71,4 +83,3 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default Events;
-// Events.whyDidYouRender = true;

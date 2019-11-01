@@ -196,33 +196,33 @@ const EventStore = <T extends IEventStore>(props: T) => {
   };
 
   return (
-    <EventActionContext.Provider
+    <EventStateContext.Provider
       value={{
-        getEvents,
-        addEvent,
-        updateEvent,
-        deleteEvent,
-        setCurrent,
-        clearCurrent,
-        setEditing,
-        filterEvents,
-        clearFilter,
-        addAttendee
+        events: state.events,
+        filtered: state.filtered,
+        editing: state.editing,
+        error: state.error,
+        current: state.current,
+        eventLoading: state.eventLoading
       }}
     >
-      <EventStateContext.Provider
+      <EventActionContext.Provider
         value={{
-          events: state.events,
-          filtered: state.filtered,
-          editing: state.editing,
-          error: state.error,
-          current: state.current,
-          eventLoading: state.eventLoading
+          getEvents,
+          addEvent,
+          updateEvent,
+          deleteEvent,
+          setCurrent,
+          clearCurrent,
+          setEditing,
+          filterEvents,
+          clearFilter,
+          addAttendee
         }}
       >
         {props.children}
-      </EventStateContext.Provider>
-    </EventActionContext.Provider>
+      </EventActionContext.Provider>
+    </EventStateContext.Provider>
   );
 };
 

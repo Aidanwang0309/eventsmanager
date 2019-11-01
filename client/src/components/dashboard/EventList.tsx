@@ -26,9 +26,11 @@ const EventList = (props: { list: string }) => {
     const { list } = props;
 
     const eventsMap = user && {
+      going: user.goingEvents.filter(event => {
+        return formatDate(event.date).isFuture;
+      }),
       myEvents: events.filter(event => event.creator === user._id),
-      archived: user.goingEvents.filter(event => formatDate(event.date).isPast),
-      going: user.goingEvents.filter(event => formatDate(event.date).isFuture)
+      archived: user.goingEvents.filter(event => formatDate(event.date).isPast)
     };
 
     const data = (eventsMap as any)[list].reduce(

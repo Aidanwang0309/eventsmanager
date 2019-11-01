@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -27,18 +27,18 @@ const Home = () => {
   const { editing } = useEventState();
   const { setEditing } = useEventAction();
 
-  const { isAuthenticated } = useAuthState();
   const { loadUser } = useAuthAction();
+  const { isAuthenticated } = useAuthState();
 
   useEffect(() => {
     loadUser();
-  }, [loadUser]);
+  }, [loadUser, isAuthenticated]);
 
   return (
     <div className={classes.container}>
       <Alert />
       <Fab
-        aria-label='Add'
+        aria-label="Add"
         style={{
           color: 'white',
           zIndex: 100,
@@ -56,18 +56,18 @@ const Home = () => {
         maxWidth={'sm'}
         open={editing}
         onBackdropClick={() => setEditing(false)}
-        aria-labelledby='simple-dialog-title'
+        aria-labelledby="simple-dialog-title"
       >
         {isAuthenticated ? (
           <EventForm />
         ) : (
           <Typography
-            align='center'
+            align="center"
             style={{ color: 'black', padding: '5rem' }}
             gutterBottom
           >
             You have to login to publish the content.
-            <Link to='/login'>SIGN IN</Link>
+            <Link to="/login">SIGN IN</Link>
           </Typography>
         )}
       </Dialog>

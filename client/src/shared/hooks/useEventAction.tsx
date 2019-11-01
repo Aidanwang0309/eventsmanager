@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { EventActionContext } from 'src/context';
 
-const useEventState = () => {
+const useEventAction = () => {
   const context = useContext(EventActionContext);
   if (context === undefined) {
     throw new Error(`useEventAction must be used within a EventProvider`);
@@ -10,4 +10,4 @@ const useEventState = () => {
   return contextRef.current;
 };
 
-export default useEventState;
+export default useEventAction;

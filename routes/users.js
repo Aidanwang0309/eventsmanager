@@ -1,3 +1,4 @@
+const Event = require('../models/Event');
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -84,7 +85,7 @@ router.put('/update', auth, async (req, res) => {
   if (email) userField.email = email;
   if (avatar) userField.avatar = avatar;
   if (date) userField.date = date;
-  if (goingEvents) userField.goingEvents = goingEvents.map(event => event._id);
+  if (goingEvents) userField.goingEvents = goingEvents;
 
   try {
     let user = await User.findById(_id);
@@ -93,7 +94,10 @@ router.put('/update', auth, async (req, res) => {
       _id,
       { $set: userField },
       { new: true }
-    );
+    ).populate({
+      model: Event,
+      path: 'goingEvents'
+    });
     res.json({ status: 200, user });
   } catch (err) {
     console.error(err.message);

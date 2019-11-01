@@ -1,26 +1,26 @@
-const Event = require("../models/Event");
-const User = require("../models/User");
-const express = require("express");
+const Event = require('../models/Event');
+const User = require('../models/User');
+const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
-const auth = require("../middleware/auth");
+const { check, validationResult } = require('express-validator');
+const auth = require('../middleware/auth');
 
 // @route Get api/events
 // @desc Get all events
 // access Public
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const events = await Event.find()
       .sort({ date: 1 })
       .populate({
         model: User,
-        path: "attendees"
+        path: 'attendees'
       });
     res.json({ status: 200, events });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ status: 200, msg: "Server Error" });
+    res.status(500).send({ status: 200, msg: 'Server Error' });
   }
 });
 
@@ -28,16 +28,16 @@ router.get("/", async (req, res) => {
 // @desc event info by id
 // access Public
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const event = await Event.findOne({ _id: req.params.id }).populate({
       model: User,
-      path: "attendees"
+      path: 'attendees'
     });
     res.json({ status: 200, event });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ status: 500, msg: "Server Error" });
+    res.status(500).send({ status: 500, msg: 'Server Error' });
   }
 });
 
@@ -46,19 +46,19 @@ router.get("/:id", async (req, res) => {
 // access Private
 
 router.post(
-  "/",
+  '/',
   auth,
   [
-    check("name", "Name is required")
+    check('name', 'Name is required')
       .not()
       .isEmpty(),
-    check("date", "date is required")
+    check('date', 'date is required')
       .not()
       .isEmpty(),
-    check("location", "location is required")
+    check('location', 'location is required')
       .not()
       .isEmpty(),
-    check("type", "type is required")
+    check('type', 'type is required')
       .not()
       .isEmpty()
   ],
@@ -85,7 +85,7 @@ router.post(
       res.json({ status: 200, event });
     } catch (err) {
       console.log(err.message);
-      res.status(500).send("Server Error");
+      res.status(500).send('Server Error');
     }
   }
 );
@@ -94,7 +94,7 @@ router.post(
 // @desc Update event
 // access Private
 
-router.put("/:id", auth, async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   const { name, date, location, type, poster, attendees } = req.body;
 
   // Build event object
@@ -109,7 +109,7 @@ router.put("/:id", auth, async (req, res) => {
   try {
     let event = await Event.findById(req.params.id);
 
-    if (!event) return res.status(404).json({ msg: "event not found" });
+    if (!event) return res.status(404).json({ msg: 'event not found' });
 
     // if (event.creator.toString() !== req.user.id) {
     //   return res.status(401).json({ msg: "Not authorized" });
@@ -119,12 +119,15 @@ router.put("/:id", auth, async (req, res) => {
       req.params.id,
       { $set: eventFields },
       { new: true }
-    );
+    ).populate({
+      model: User,
+      path: 'attendees'
+    });
 
     res.json({ status: 200, event });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
@@ -132,21 +135,21 @@ router.put("/:id", auth, async (req, res) => {
 // @desc delete event
 // access private
 
-router.delete("/:id", auth, async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     let event = await Event.findById(req.params.id);
 
-    if (!event) return res.status(404).json({ msg: "event not found" });
+    if (!event) return res.status(404).json({ msg: 'event not found' });
 
     if (event.creator.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "Not authorized" });
+      return res.status(401).json({ msg: 'Not authorized' });
     }
 
     await Event.findByIdAndRemove(req.params.id);
-    res.json({ status: 200, msg: "Event removed" });
+    res.json({ status: 200, msg: 'Event removed' });
   } catch (err) {
     console.error(er.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
