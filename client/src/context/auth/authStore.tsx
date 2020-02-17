@@ -94,7 +94,6 @@ export const AuthStore = <T extends AuthStoreProps>(props: T) => {
         'Content-Type': 'application/json'
       }
     };
-
     try {
       const res = await axios.post('/api/auth', formData, config);
       dispatch({

@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
         model: Event,
         path: 'goingEvents'
       });
-    console.log(user);
+    // console.log(user);
     res.json({ status: 200, user });
   } catch (err) {
     console.error(err.message);

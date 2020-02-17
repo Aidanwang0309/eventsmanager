@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -30,23 +30,17 @@ const Home = () => {
   const { loadUser } = useAuthAction();
   const { isAuthenticated } = useAuthState();
 
+
   useEffect(() => {
     loadUser();
-  }, [loadUser, isAuthenticated]);
+  }, [isAuthenticated]);
 
   return (
     <div className={classes.container}>
       <Alert />
       <Fab
         aria-label="Add"
-        style={{
-          color: 'white',
-          zIndex: 100,
-          position: 'fixed',
-          bottom: '3rem',
-          right: '3rem',
-          background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
-        }}
+        className={classes.button}
         onClick={() => setEditing(true)}
       >
         <AddIcon />
@@ -61,15 +55,15 @@ const Home = () => {
         {isAuthenticated ? (
           <EventForm />
         ) : (
-          <Typography
-            align="center"
-            style={{ color: 'black', padding: '5rem' }}
-            gutterBottom
-          >
-            You have to login to publish the content.
+            <Typography
+              align="center"
+              className={classes.text}
+              gutterBottom
+            >
+              You have to login to publish the content.
             <Link to="/login">SIGN IN</Link>
-          </Typography>
-        )}
+            </Typography>
+          )}
       </Dialog>
       <Events />
     </div>
@@ -81,6 +75,18 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       background: theme.palette.background.default,
       minHeight: '100vh'
+    },
+    button: {
+      color: 'white',
+      zIndex: 100,
+      position: 'fixed',
+      bottom: '3rem',
+      right: '3rem',
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+    },
+    text: {
+      color: 'black',
+      padding: '5rem'
     }
   })
 );
