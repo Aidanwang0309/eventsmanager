@@ -26,8 +26,8 @@ Button.defaultProps = {
   type: 'button'
 };
 
-const buttonPropsAreEqual = (prev: ButtonProps, next: ButtonProps) => {
-  return prev.variant === next.variant;
-};
+// const buttonPropsAreEqual = (prev: ButtonProps, next: ButtonProps) => {
+//   return prev.variant === next.variant;
+// };
 
-export default memo(Button, buttonPropsAreEqual);
+export default Button;

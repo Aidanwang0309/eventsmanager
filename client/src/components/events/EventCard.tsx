@@ -1,13 +1,5 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  Fragment,
-  useState,
-  ReactElement,
-  memo
-} from 'react';
+import React, { useState, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useEventAction, useAuthState, useAuthAction } from 'src/shared/hooks';
 import { IUser } from 'src/context/auth/authTypes';
 import { Button, BUTTON_VARIANTS } from 'src/shared/components';
@@ -39,82 +31,52 @@ type EventCardProps = {
   creator: string;
   attendees: IUser[];
   poster: string;
-  // user: IUser | null;
+  user: IUser | null;
+  updateUser: (props: IUser) => Promise<void>;
 };
 
+const { REACT_APP_ENV } = process.env
+
 const EventCard = (event: EventCardProps) => {
-  const { deleteEvent, setCurrent, setEditing, addAttendee } = useEventAction();
+  const { _id, name, date, location, creator, attendees, poster, user, updateUser } = event;
+  const ImgUrl = REACT_APP_ENV === 'development' ? `http://localhost:5000/api/file/${poster}` : `${window.location.protocol}//${window.location.hostname}/api/file/${poster}`
 
   const classes = useStyles();
+
+  // const { updateUser } = useAuthAction();
+  // const { user } = useAuthState();
+  const { deleteEvent, setCurrent, setEditing, addAttendee } = useEventAction();
   const [open, setOpen] = useState<boolean>(false);
 
-  const {
-    _id,
-    name,
-    date,
-    location,
-    creator,
-    attendees,
-    poster,
-    type
-    // user
-  } = event;
-  const { updateUser } = useAuthAction();
-  const { user } = useAuthState();
 
   const handleDelete = () => {
     deleteEvent({ id: _id, poster });
   };
 
-  const handleGoing = () => {
+
+  console.log(user);
+  const toggleGoing = (state: Boolean) => {
+    console.log(user);
     if (user === null) {
       setOpen(true);
       return;
     }
-
-    const attendeeUpdatedEvent = {
-      ...event,
-      attendees: [...attendees, user]
-    };
-
     const { goingEvents } = user;
-
     const updatedUser = {
       ...user,
-      goingEvents: goingEvents.length === 0 ? [event] : [...goingEvents, event]
-    };
-
-    addAttendee(attendeeUpdatedEvent);
-    updateUser(updatedUser);
-    // getEventById(_id);
-    // [...attendees.map(attendee => attendee._id), user._id]
-    // [...[attendees._id], user._id]
-  };
-
-  const handleNotGoing = () => {
-    if (user === null) {
-      setOpen(true);
-      return;
+      goingEvents: state ? goingEvents.length === 0 ? [event] : [...goingEvents, event] : goingEvents.filter(event => event._id !== _id)
     }
-
-    const { goingEvents } = user;
-
-    const updatedUser = {
-      ...user,
-      goingEvents: goingEvents.filter(event => event._id !== _id)
-    };
-    updateUser(updatedUser);
-
     const attendeeUpdatedEvent = {
       ...event,
-      attendees: attendees.filter(attendee => attendee._id !== user._id)
-    };
+      attendees: state ? [...attendees, user] : attendees.filter(attendee => attendee._id !== user._id)
+    }
     addAttendee(attendeeUpdatedEvent);
-  };
+    updateUser(updatedUser);
+  }
 
   const handleEditing = (): ReactElement | null => {
     return user !== null && user._id === creator ? (
-      <Fragment>
+      <>
         <DeleteOutlinedIcon
           className={classes.MuiAvatarDeleteButton}
           onClick={handleDelete}
@@ -126,13 +88,13 @@ const EventCard = (event: EventCardProps) => {
             setEditing(true);
           }}
         />
-      </Fragment>
+      </>
     ) : null;
   };
 
-  const isUserGoing = () => {
-    if (user !== null) {
-      const { goingEvents } = user;
+  const isUserGoing = (props: IUser | null) => {
+    if (props !== null) {
+      const { goingEvents } = props;
       if (_.find(goingEvents, { _id: _id })) return true;
     }
     return false;
@@ -142,8 +104,7 @@ const EventCard = (event: EventCardProps) => {
     <Card className={classes.MuiEngagementCard} key={_id}>
       <CardMedia
         className={classes.MuiCardMedia}
-        // image={`http://localhost:5000/api/file/${poster}`}
-        image={`${window.location.protocol}//${window.location.hostname}/api/file/${poster}`}
+        image={ImgUrl}
       />
       <CardContent className={classes.MuiCardContent}>
         <Typography
@@ -181,23 +142,14 @@ const EventCard = (event: EventCardProps) => {
               })}
           </div>
 
-          {isUserGoing() === true ? (
-            <Button
-              style={{ width: '50%' }}
-              variant={BUTTON_VARIANTS.DEFAULT}
-              onClick={handleNotGoing}
-            >
-              DROP
-            </Button>
-          ) : (
-            <Button
-              style={{ width: '50%' }}
-              variant={BUTTON_VARIANTS.OUTLINED}
-              onClick={handleGoing}
-            >
-              GOING
-            </Button>
-          )}
+          <Button
+            style={{ width: '50%' }}
+            variant={isUserGoing(user) ? BUTTON_VARIANTS.DEFAULT : BUTTON_VARIANTS.OUTLINED}
+            onClick={() => toggleGoing(!isUserGoing(user))}
+          >
+            {isUserGoing(user) ? 'DROP' : 'GOING'}
+          </Button>
+
         </div>
         {handleEditing()}
       </CardContent>
@@ -213,7 +165,7 @@ const EventCard = (event: EventCardProps) => {
           style={{ color: 'black', padding: '5rem' }}
           gutterBottom
         >
-          You have to login to publish the content .
+          You have to login to publish the content.
           <Link to="/login">SIGN IN</Link>
         </Typography>
       </Dialog>
@@ -304,9 +256,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// const eventPropsAreEqual = (prev: EventCardProps, next: EventCardProps) => {
-//   return _.isEqual(prev, next)
-// };
+// const eventCardPropsAreEqual = (prevEvent: EventCardProps, nextEvent: EventCardProps) => {
 
-// export default memo(EventCard, eventPropsAreEqual);
+//   if (nextEvent.user !== null) {
+//     if (prevEvent.user === null) {
+//       console.log('here1')
+//       return false
+//     }
+//     console.log('here2', prevEvent.attendees, nextEvent.attendees, nextEvent.user)
+//     return prevEvent.attendees.length === nextEvent.attendees.length &&
+//       prevEvent.user._id === nextEvent.user._id
+//   }
+//   console.log('here3')
+//   return true;
+// }
+
 export default EventCard;

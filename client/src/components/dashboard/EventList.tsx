@@ -13,10 +13,15 @@ type IData = {
   poster: string;
 };
 
+const { REACT_APP_ENV } = process.env
+const getImgUrl = (item: IData) => REACT_APP_ENV === 'development' ? `http://localhost:5000/api/file/${item.poster}` : `${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`
+
+
 const EventList = (props: { list: string }) => {
   const { events } = useEventState();
   const { getEvents } = useEventAction();
   const { user } = useAuthState();
+
 
   useEffect(() => {
     getEvents();
@@ -68,8 +73,7 @@ const EventList = (props: { list: string }) => {
               <Col xs={0} sm={10} md={10} lg={10} xl={10}>
                 <img
                   style={{ height: '100%', width: '100%' }}
-                  src={`${window.location.protocol}//${window.location.hostname}/api/file/${item.poster}`}
-                  // src={`http://localhost:5000/api/file/${item.poster}`}
+                  src={getImgUrl(item)}
                   alt="event poster"
                 />
               </Col>

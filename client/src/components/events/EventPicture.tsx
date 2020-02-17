@@ -5,6 +5,9 @@ type EventPictureProps = {
   handlePicture: (props: string) => void;
 };
 
+const { REACT_APP_ENV } = process.env
+const ImgUrl = REACT_APP_ENV === 'development' ? 'http://localhost:5000/api/img/upload' : `${window.location.protocol}//${window.location.hostname}/api/img/upload`
+
 const EventPicture = (props: EventPictureProps) => {
   const { handlePicture } = props;
   const [upload, setUpload] = useState({
@@ -67,16 +70,15 @@ const EventPicture = (props: EventPictureProps) => {
       listType="picture-card"
       showUploadList={false}
       headers={{ 'x-auth-token': `${localStorage.token}` }}
-      // action="http://localhost:5000/api/img/upload"
-      action={`${window.location.protocol}//${window.location.hostname}/api/img/upload`}
+      action={ImgUrl}
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
       {url ? (
         <img src={url} alt="avatar" style={{ width: '100%' }} />
       ) : (
-        uploadButton
-      )}
+          uploadButton
+        )}
     </Upload>
   );
 };
